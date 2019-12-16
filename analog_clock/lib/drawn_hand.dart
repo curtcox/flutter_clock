@@ -73,11 +73,21 @@ class _HandPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final center = (Offset.zero & size).center;
-    // We want to start at the top, not at the x-axis, so add pi/2.
+    final position = _position(size);
+    _paintLine(canvas, _center(size), position);
+    _paintText(canvas, size, position);
+  }
+
+  Offset _center(Size size) => (Offset.zero & size).center;
+
+  Offset _position(Size size) {
     final angle = angleRadians - math.pi / 2.0;
     final length = size.shortestSide * 0.5 * handSize;
-    final position = center + Offset(math.cos(angle), math.sin(angle)) * length;
+    return _center(size) + Offset(math.cos(angle), math.sin(angle)) * length;
+  }
+
+  @override
+  void _paintLine(Canvas canvas, Offset center, Offset position) {
     final linePaint = Paint()
       ..color = color
       ..strokeWidth = lineWidth
@@ -85,6 +95,27 @@ class _HandPainter extends CustomPainter {
 
     canvas.drawLine(center, position, linePaint);
   }
+
+  void _paintText(Canvas canvas, Size size, Offset position) {
+    final textStyle = TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+    );
+    final textSpan = TextSpan(
+      text: '11',
+      style: textStyle,
+    );
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: size.width,
+    );
+    textPainter.paint(canvas, position);
+  }
+
 
   @override
   bool shouldRepaint(_HandPainter oldDelegate) {
