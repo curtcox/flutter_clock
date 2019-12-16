@@ -87,28 +87,25 @@ class _AnalogClockState extends State<AnalogClock> {
   }
 
   // There are many ways to apply themes to your clock. Some are:
-  //  - Inherit the parent Theme (see ClockCustomizer in the
-  //    flutter_clock_helper package).
+  //  - Inherit the parent Theme (see ClockCustomizer in the flutter_clock_helper package).
   //  - Override the Theme.of(context).colorScheme.
   //  - Create your own [ThemeData], demonstrated in [AnalogClock].
-  //  - Create a map of [Color]s to custom keys, demonstrated in
-  //    [DigitalClock].
-  ThemeData _customTheme(BuildContext context) => Theme.of(context).brightness == Brightness.light
+  //  - Create a map of [Color]s to custom keys, demonstrated in [DigitalClock].
+  ThemeData _customTheme(BuildContext context) =>
+      // primary, highlight, accent -> Hour, Minute, Second hand.
+      Theme.of(context).brightness == Brightness.light
       ? Theme.of(context).copyWith(
-    // Hour hand.
-    primaryColor: Color(0xFF4285F4),
-    // Minute hand.
-    highlightColor: Color(0xFF8AB4F8),
-    // Second hand.
-    accentColor: Color(0xFF669DF6),
-    backgroundColor: Color(0xFFD2E3FC),
-  )
+          primaryColor: Color(0xFF4285F4),
+          highlightColor: Color(0xFF8AB4F8),
+          accentColor: Color(0xFF669DF6),
+          backgroundColor: Color(0xFFD2E3FC),
+        )
       : Theme.of(context).copyWith(
-    primaryColor: Color(0xFFD2E3FC),
-    highlightColor: Color(0xFF4285F4),
-    accentColor: Color(0xFF8AB4F8),
-    backgroundColor: Color(0xFF3C4043),
-  );
+          primaryColor: Color(0xFFD2E3FC),
+          highlightColor: Color(0xFF4285F4),
+          accentColor: Color(0xFF8AB4F8),
+          backgroundColor: Color(0xFF3C4043),
+        );
 
   DefaultTextStyle _weatherInfo(ThemeData customTheme) => DefaultTextStyle(
     style: TextStyle(color: customTheme.primaryColor),
@@ -152,21 +149,12 @@ class _AnalogClockState extends State<AnalogClock> {
               angleRadians: _now.minute * radiansPerTick,
             ),
             // Example of a hand drawn with [Container].
-            ContainerHand(
-              color: Colors.transparent,
+            DrawnHand(
+              color: customTheme.primaryColor,
+              thickness: 18,
               size: 0.5,
               angleRadians: _now.hour * radiansPerHour +
                   (_now.minute / 60) * radiansPerHour,
-              child: Transform.translate(
-                offset: Offset(0.0, -60.0),
-                child: Container(
-                  width: 32,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: customTheme.primaryColor,
-                  ),
-                ),
-              ),
             ),
             Positioned(
               left: 0,
