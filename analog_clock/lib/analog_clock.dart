@@ -77,10 +77,8 @@ class _AnalogClockState extends State<AnalogClock> {
   void _updateTime() {
     setState(() {
       _now = DateTime.now();
-      // Update once per second. Make sure to do it at the beginning of each
-      // new second, so that the clock is accurate.
       _timer = Timer(
-        Duration(seconds: 1) - Duration(milliseconds: _now.millisecond),
+        Duration(milliseconds: 15) - Duration(milliseconds: _now.millisecond),
         _updateTime,
       );
     });
@@ -121,25 +119,24 @@ class _AnalogClockState extends State<AnalogClock> {
   );
 
   _hourHand(ThemeData customTheme) => DrawnHand(
-        color: customTheme.primaryColor,
-        thickness: 18,
-        size: 0.5,
-        angleRadians: _now.hour * radiansPerHour +
-            (_now.minute / 60) * radiansPerHour,
-      );
+      color: customTheme.primaryColor,
+      thickness: 18,
+      size: 0.5,
+      angleRadians: (_now.hour + (_now.minute / 60)) * radiansPerHour,
+    );
 
   _minuteHand(ThemeData customTheme) => DrawnHand(
-        color: customTheme.highlightColor,
-        thickness: 16,
-        size: 0.9,
-        angleRadians: _now.minute * radiansPerTick,
-      );
+      color: customTheme.highlightColor,
+      thickness: 16,
+      size: 0.9,
+      angleRadians: _now.minute * radiansPerTick,
+    );
 
   _secondHand(ThemeData customTheme) => DrawnHand(
       color: customTheme.accentColor,
       thickness: 4,
       size: 1,
-      angleRadians: _now.second * radiansPerTick,
+      angleRadians: (_now.second + _now.millisecond / 1000) * radiansPerTick,
     );
 
   @override
