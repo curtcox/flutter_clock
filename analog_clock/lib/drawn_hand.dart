@@ -22,14 +22,17 @@ class DrawnHand extends Hand {
     @required this.thickness,
     @required double size,
     @required double angleRadians,
+    @required int text,
   })  : assert(color != null),
         assert(thickness != null),
         assert(size != null),
         assert(angleRadians != null),
+        assert(text != null),
         super(
           color: color,
           size: size,
           angleRadians: angleRadians,
+          text: text,
         );
 
   /// How thick the hand should be drawn, in logical pixels.
@@ -44,6 +47,7 @@ class DrawnHand extends Hand {
             handSize: size,
             lineWidth: thickness,
             angleRadians: angleRadians,
+            text: text,
             color: color,
           ),
         ),
@@ -58,6 +62,7 @@ class _HandPainter extends CustomPainter {
     @required this.handSize,
     @required this.lineWidth,
     @required this.angleRadians,
+    @required this.text,
     @required this.color,
   })  : assert(handSize != null),
         assert(lineWidth != null),
@@ -69,13 +74,14 @@ class _HandPainter extends CustomPainter {
   double handSize;
   double lineWidth;
   double angleRadians;
+  int text;
   Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
     final position = _position(size);
     _paintLine(canvas, _center(size), position);
-    _paintText(canvas, size, position);
+    _paintText(canvas, size, position, text);
   }
 
   Offset _center(Size size) => (Offset.zero & size).center;
@@ -96,23 +102,11 @@ class _HandPainter extends CustomPainter {
     canvas.drawLine(center, position, linePaint);
   }
 
-  void _paintText(Canvas canvas, Size size, Offset position) {
-    final textStyle = TextStyle(
-      color: Colors.black,
-      fontSize: 30,
-    );
-    final textSpan = TextSpan(
-      text: '11',
-      style: textStyle,
-    );
-    final textPainter = TextPainter(
-      text: textSpan,
-      textDirection: TextDirection.ltr,
-    );
-    textPainter.layout(
-      minWidth: 0,
-      maxWidth: size.width,
-    );
+  void _paintText(Canvas canvas, Size size, Offset position, int text) {
+    final textStyle = TextStyle(color: Colors.black, fontSize: 30,);
+    final textSpan = TextSpan(text: text.toString(), style: textStyle,);
+    final textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
+    textPainter.layout(minWidth: 0, maxWidth: size.width,);
     textPainter.paint(canvas, position);
   }
 

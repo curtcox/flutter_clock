@@ -10,7 +10,6 @@ import 'package:flutter/semantics.dart';
 import 'package:intl/intl.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 
-import 'container_hand.dart';
 import 'drawn_hand.dart';
 
 /// Total distance traveled by a second or a minute hand, each second or minute,
@@ -123,6 +122,7 @@ class _AnalogClockState extends State<AnalogClock> {
       thickness: 18,
       size: 0.5,
       angleRadians: (_now.hour + _now.minute / 60) * radiansPerHour,
+      text: _now.hour,
     );
 
   _minuteHand(ThemeData customTheme) => DrawnHand(
@@ -130,6 +130,7 @@ class _AnalogClockState extends State<AnalogClock> {
       thickness: 16,
       size: 0.9,
       angleRadians: (_now.minute + _now.second / 60) * radiansPerTick,
+      text: _now.minute,
     );
 
   _secondHand(ThemeData customTheme) => DrawnHand(
@@ -137,6 +138,7 @@ class _AnalogClockState extends State<AnalogClock> {
       thickness: 4,
       size: 1,
       angleRadians: (_now.second + _now.millisecond / 1000) * radiansPerTick,
+      text: _now.second,
     );
 
   @override

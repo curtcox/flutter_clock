@@ -16,6 +16,7 @@ abstract class Hand extends StatelessWidget {
     @required this.color,
     @required this.size,
     @required this.angleRadians,
+    @required this.text,
   })  : assert(color != null),
         assert(size != null),
         assert(angleRadians != null);
@@ -23,12 +24,14 @@ abstract class Hand extends StatelessWidget {
   /// Hand color.
   final Color color;
 
-  /// Hand length, as a percentage of the smaller side of the clock's parent
-  /// container.
+  /// Hand length, as a percentage of the smaller side of the clock's parent container.
   final double size;
 
   /// The angle, in radians, at which the hand is drawn.
   ///
   /// This angle is measured from the 12 o'clock position.
   final double angleRadians;
+
+  /// text to display on/for the hand
+  final int text;
 }
