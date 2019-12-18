@@ -95,13 +95,13 @@ class _AnalogClockState extends State<AnalogClock> {
           primaryColor: Color(0xFF4285F4),
           highlightColor: Color(0xFF8AB4F8),
           accentColor: Color(0xFF669DF6),
-          backgroundColor: Color(0xFFD2E3FC),
+          backgroundColor: Color(0xFFFFFF),
         )
       : Theme.of(context).copyWith(
           primaryColor: Color(0xFFD2E3FC),
           highlightColor: Color(0xFF4285F4),
           accentColor: Color(0xFF8AB4F8),
-          backgroundColor: Color(0xFF3C4043),
+          backgroundColor: Color(0x000000),
         );
 
   DefaultTextStyle _weatherInfo(ThemeData customTheme) => DefaultTextStyle(

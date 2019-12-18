@@ -103,11 +103,13 @@ class _HandPainter extends CustomPainter {
   }
 
   void _paintText(Canvas canvas, Size size, Offset position, int text) {
-    final textStyle = TextStyle(color:color, fontSize: 30 * angleRadians,);
+    final fontSize = 20 + 5 * angleRadians;
+    final textStyle = TextStyle(color:Colors.black, fontSize: fontSize,);
     final textSpan = TextSpan(text: text.toString(), style: textStyle,);
     final textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
     textPainter.layout(minWidth: 0, maxWidth: size.width,);
-    textPainter.paint(canvas, position);
+    final at = position.translate(textPainter.width / -2, textPainter.height / -2);
+    textPainter.paint(canvas,at);
   }
 
 
