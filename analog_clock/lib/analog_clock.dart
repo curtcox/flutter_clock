@@ -120,6 +120,28 @@ class _AnalogClockState extends State<AnalogClock> {
     ),
   );
 
+  _hourHand(ThemeData customTheme) => DrawnHand(
+        color: customTheme.primaryColor,
+        thickness: 18,
+        size: 0.5,
+        angleRadians: _now.hour * radiansPerHour +
+            (_now.minute / 60) * radiansPerHour,
+      );
+
+  _minuteHand(ThemeData customTheme) => DrawnHand(
+        color: customTheme.highlightColor,
+        thickness: 16,
+        size: 0.9,
+        angleRadians: _now.minute * radiansPerTick,
+      );
+
+  _secondHand(ThemeData customTheme) => DrawnHand(
+      color: customTheme.accentColor,
+      thickness: 4,
+      size: 1,
+      angleRadians: _now.second * radiansPerTick,
+    );
+
   @override
   Widget build(BuildContext context) {
     final customTheme = _customTheme(context);
@@ -135,27 +157,9 @@ class _AnalogClockState extends State<AnalogClock> {
         color: customTheme.backgroundColor,
         child: Stack(
           children: [
-            // Example of a hand drawn with [CustomPainter].
-            DrawnHand(
-              color: customTheme.accentColor,
-              thickness: 4,
-              size: 1,
-              angleRadians: _now.second * radiansPerTick,
-            ),
-            DrawnHand(
-              color: customTheme.highlightColor,
-              thickness: 16,
-              size: 0.9,
-              angleRadians: _now.minute * radiansPerTick,
-            ),
-            // Example of a hand drawn with [Container].
-            DrawnHand(
-              color: customTheme.primaryColor,
-              thickness: 18,
-              size: 0.5,
-              angleRadians: _now.hour * radiansPerHour +
-                  (_now.minute / 60) * radiansPerHour,
-            ),
+            _secondHand(customTheme),
+            _minuteHand(customTheme),
+            _hourHand(customTheme),
             Positioned(
               left: 0,
               bottom: 0,
