@@ -122,14 +122,14 @@ class _AnalogClockState extends State<AnalogClock> {
       color: customTheme.primaryColor,
       thickness: 18,
       size: 0.5,
-      angleRadians: (_now.hour + (_now.minute / 60)) * radiansPerHour,
+      angleRadians: (_now.hour + _now.minute / 60) * radiansPerHour,
     );
 
   _minuteHand(ThemeData customTheme) => DrawnHand(
       color: customTheme.highlightColor,
       thickness: 16,
       size: 0.9,
-      angleRadians: _now.minute * radiansPerTick,
+      angleRadians: (_now.minute + _now.second / 60) * radiansPerTick,
     );
 
   _secondHand(ThemeData customTheme) => DrawnHand(
