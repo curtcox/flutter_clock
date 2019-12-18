@@ -103,7 +103,7 @@ class _HandPainter extends CustomPainter {
   }
 
   void _paintText(Canvas canvas, Size size, Offset position, int text) {
-    final textStyle = TextStyle(color: Colors.black, fontSize: 30,);
+    final textStyle = TextStyle(color:color, fontSize: 30 * angleRadians,);
     final textSpan = TextSpan(text: text.toString(), style: textStyle,);
     final textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
     textPainter.layout(minWidth: 0, maxWidth: size.width,);
@@ -112,10 +112,10 @@ class _HandPainter extends CustomPainter {
 
 
   @override
-  bool shouldRepaint(_HandPainter oldDelegate) {
-    return oldDelegate.handSize != handSize ||
-        oldDelegate.lineWidth != lineWidth ||
-        oldDelegate.angleRadians != angleRadians ||
-        oldDelegate.color != color;
-  }
+  bool shouldRepaint(_HandPainter old) =>
+     old.handSize     != handSize     ||
+     old.lineWidth    != lineWidth    ||
+     old.angleRadians != angleRadians ||
+     old.color        != color;
+
 }
