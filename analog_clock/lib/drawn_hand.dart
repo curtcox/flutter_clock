@@ -96,10 +96,12 @@ class _HandPainter extends CustomPainter {
   void _paintLine(Canvas canvas, Offset center, Offset position) {
     final linePaint = Paint()
       ..color = color
-      ..strokeWidth = lineWidth
+      ..strokeWidth = lineWidth / 6
       ..strokeCap = StrokeCap.square;
+    final delta = lineWidth / 2;
 
-    canvas.drawLine(center, position, linePaint);
+    canvas.drawLine(Offset(center.dx - delta,center.dy + delta), position, linePaint);
+    canvas.drawLine(Offset(center.dx + delta,center.dy - delta), position, linePaint);
   }
 
   void _paintText(Canvas canvas, Size size, Offset position, int text) {
