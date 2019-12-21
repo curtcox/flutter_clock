@@ -4,6 +4,7 @@
 
 import 'dart:math' as math;
 
+import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
 import 'hand.dart';
@@ -16,27 +17,11 @@ import 'hand.dart';
 class DrawnHand extends Hand {
   /// Create a const clock [Hand].
   ///
-  /// All of the parameters are required and must not be null.
-  const DrawnHand({
-    @required Color color,
-    @required this.thickness,
-    @required double size,
-    @required double angleRadians,
-    @required int text,
-  })  : assert(color != null),
-        assert(thickness != null),
-        assert(size != null),
-        assert(angleRadians != null),
-        assert(text != null),
-        super(
-          color: color,
-          size: size,
-          angleRadians: angleRadians,
-          text: text,
-        );
+  const DrawnHand(
+    @required HandFunction handFunction, @required DateTime time,
+  )  : assert(handFunction != null), assert(time!=null),
+        super(handFunction,time);
 
-  /// How thick the hand should be drawn, in logical pixels.
-  final double thickness;
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +29,11 @@ class DrawnHand extends Hand {
       child: SizedBox.expand(
         child: CustomPaint(
           painter: _HandPainter(
-            handSize: size,
-            lineWidth: thickness,
-            angleRadians: angleRadians,
-            text: text,
-            color: color,
+            handSize: handFunction.size(time),
+            lineWidth: handFunction.thickness(time),
+            angleRadians: handFunction.angleRadians(time),
+            text: handFunction.text(time),
+            color: handFunction.color(time),
           ),
         ),
       ),
@@ -106,21 +91,20 @@ class _HandPainter extends CustomPainter {
   }
 
   void _paintText(Canvas canvas, Size size, Offset position, int text) {
-    final fontSize = 20 + 5 * angleRadians;
-    final textStyle = TextStyle(color:Colors.black, fontSize: fontSize,);
-    final textSpan = TextSpan(text: text.toString(), style: textStyle,);
-    final textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
+    final textPainter = _textPainter();
     textPainter.layout(minWidth: 0, maxWidth: size.width,);
     final at = position.translate(textPainter.width / -2, textPainter.height / -2);
     textPainter.paint(canvas,at);
   }
 
+  TextPainter _textPainter() {
+    final fontSize = 20 + 5 * angleRadians;
+    final textStyle = TextStyle(color:Colors.black, fontSize: fontSize,);
+    final textSpan = TextSpan(text: text.toString(), style: textStyle,);
+    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
+  }
 
   @override
-  bool shouldRepaint(_HandPainter old) =>
-     old.handSize     != handSize     ||
-     old.lineWidth    != lineWidth    ||
-     old.angleRadians != angleRadians ||
-     old.color        != color;
+  bool shouldRepaint(_HandPainter old) => true;
 
 }

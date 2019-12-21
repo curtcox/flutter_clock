@@ -4,6 +4,9 @@
 
 import 'dart:async';
 
+import 'package:analog_clock/hand_function.dart';
+import 'package:analog_clock/hour_hand.dart';
+import 'package:analog_clock/second_hand.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -11,13 +14,12 @@ import 'package:intl/intl.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 
 import 'drawn_hand.dart';
+import 'minute_hand.dart';
 
 /// Total distance traveled by a second or a minute hand, each second or minute,
 /// respectively.
 final radiansPerTick = radians(360 / 60);
 
-/// Total distance traveled by an hour hand, each hour, in radians.
-final radiansPerHour = radians(360 / 12);
 
 /// A basic analog clock.
 ///
@@ -77,7 +79,7 @@ class _AnalogClockState extends State<AnalogClock> {
     setState(() {
       _now = DateTime.now();
       _timer = Timer(
-        Duration(milliseconds: 15) - Duration(milliseconds: _now.millisecond),
+        Duration(milliseconds: 100) - Duration(milliseconds: _now.millisecond),
         _updateTime,
       );
     });
@@ -117,29 +119,10 @@ class _AnalogClockState extends State<AnalogClock> {
     ),
   );
 
-  _hourHand(ThemeData customTheme) => DrawnHand(
-      color: customTheme.primaryColor,
-      thickness: 16,
-      size: 0.5,
-      angleRadians: (_now.hour + _now.minute / 60) * radiansPerHour,
-      text: _now.hour,
-    );
 
-  _minuteHand(ThemeData customTheme) => DrawnHand(
-      color: customTheme.highlightColor,
-      thickness: 16,
-      size: 0.9,
-      angleRadians: (_now.minute + _now.second / 60) * radiansPerTick,
-      text: _now.minute,
-    );
-
-  _secondHand(ThemeData customTheme) => DrawnHand(
-      color: customTheme.accentColor,
-      thickness: 5,
-      size: 1,
-      angleRadians: (_now.second + _now.millisecond / 1000) * radiansPerTick,
-      text: _now.second,
-    );
+  _hourHand(ThemeData customTheme)   => DrawnHand(HourHand(customTheme),_now);
+  _minuteHand(ThemeData customTheme) => DrawnHand(MinuteHand(customTheme),_now);
+  _secondHand(ThemeData customTheme) => DrawnHand(SecondHand(customTheme),_now);
 
   @override
   Widget build(BuildContext context) {
