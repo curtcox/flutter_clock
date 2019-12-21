@@ -18,8 +18,8 @@ class MinuteHand extends HandFunction {
   @override double angleRadians(DateTime t) => (t.minute + t.second / 60) * radiansPerTick;
 
   @override Color color(DateTime t) => theme.brightness == Brightness.light
-      ? Color(0xFF8AB4F8)
-      : Color(0xFF4285F4);
+      ? Colors.blue
+      : Colors.blue;
 
   @override double size(DateTime t)        => 0.9;
   @override int text(DateTime t)           => t.minute;

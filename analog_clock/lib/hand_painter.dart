@@ -40,13 +40,18 @@ class HandPainter extends CustomPainter {
   Offset _position(Size size, DateTime t) =>
     _center(size) + Offset(_x(t), _y(t)) * _length(size);
 
-  Paint _paint() => Paint()
+  Paint _handPaint() => Paint()
     ..color = _color()
     ..strokeWidth = _lineWidth() / 7
     ..strokeCap = StrokeCap.square;
 
+  Paint _trailPaint(int alpha) => Paint()
+    ..color = _color().withAlpha(alpha)
+    ..strokeWidth = _lineWidth() / 14
+    ..strokeCap = StrokeCap.square;
+
   void _paintHand(Canvas canvas, Offset center, Offset position) {
-    final paint = _paint();
+    final paint = _handPaint();
     final delta = _lineWidth() / 2;
 
     canvas.drawLine(center, position, paint);
@@ -55,7 +60,7 @@ class HandPainter extends CustomPainter {
   }
 
   void _paintTail(Canvas canvas, Size size, Offset position) {
-    final paint = _paint();
+    double alpha = 255;
     DateTime t = time;
     Offset last = _position(size,t);
     double x = last.dx;
@@ -65,6 +70,11 @@ class HandPainter extends CustomPainter {
       x = x - 1;
       t = t.subtract(duration * 0.09);
       last  = Offset(x,_position(size,t).dy);
+      alpha = alpha - 0.5;
+      if (alpha < 0) {
+        return;
+      }
+      Paint paint = _trailPaint(alpha.toInt());
       canvas.drawLine(start, last, paint);
     }
   }

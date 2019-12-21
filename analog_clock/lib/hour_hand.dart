@@ -17,8 +17,8 @@ class HourHand extends HandFunction {
   @override double angleRadians(DateTime t) => (t.hour + t.minute / 60) * radiansPerHour;
 
   @override Color color(DateTime t) => theme.brightness == Brightness.light
-      ? Color(0xFF4285F4)
-      : Color(0xFFD2E3FC);
+      ? Colors.green
+      : Colors.green;
 
   @override double size(DateTime t)        => 0.5;
   @override int text(DateTime t)           => t.hour;
