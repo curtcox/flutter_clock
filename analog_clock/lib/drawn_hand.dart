@@ -22,18 +22,14 @@ class DrawnHand extends Hand {
         super(handFunction,time);
 
 
+  HandPainter _handPainter() => HandPainter(handFunction,time);
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox.expand(
         child: CustomPaint(
-          painter: HandPainter(
-            handFunction.size(time),
-            handFunction.thickness(time),
-            handFunction.angleRadians(time),
-            handFunction.text(time),
-            handFunction.color(time),
-          ),
+          painter: _handPainter(),
         ),
       ),
     );
