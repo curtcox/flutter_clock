@@ -120,9 +120,9 @@ class _AnalogClockState extends State<AnalogClock> {
   );
 
 
-  _hourHand(ThemeData customTheme)   => DrawnHand(HourHand(customTheme),_now);
-  _minuteHand(ThemeData customTheme) => DrawnHand(MinuteHand(customTheme),_now);
-  _secondHand(ThemeData customTheme) => DrawnHand(SecondHand(customTheme),_now);
+  _hourHand(ThemeData t)   => DrawnHand(HourHand(t),  _now, Duration(hours:   1));
+  _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, Duration(minutes: 1));
+  _secondHand(ThemeData t) => DrawnHand(SecondHand(t),_now, Duration(seconds: 1));
 
   @override
   Widget build(BuildContext context) {

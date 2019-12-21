@@ -14,15 +14,16 @@ abstract class Hand extends StatelessWidget {
   ///
   /// All of the parameters are required and must not be null.
   const Hand(
-    @required this.handFunction,
-    @required this.time,
-  )  : assert(handFunction != null),
-        assert(time!=null);
+    @required this.handFunction, @required this.time, @required this.duration
+  )  : assert(handFunction != null), assert(time!=null), assert(duration!=null);
 
   /// How to make a hand
   final HandFunction handFunction;
 
   /// What time is it
   final DateTime time;
+
+  /// How fast this hand moves
+  final Duration duration;
 
 }

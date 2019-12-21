@@ -17,12 +17,12 @@ class DrawnHand extends Hand {
   /// Create a const clock [Hand].
   ///
   const DrawnHand(
-    @required HandFunction handFunction, @required DateTime time,
-  )  : assert(handFunction != null), assert(time!=null),
-        super(handFunction,time);
+    @required HandFunction handFunction, @required DateTime time, @required Duration duration
+  )  : assert(handFunction != null), assert(time!=null), assert(duration!=null),
+        super(handFunction,time,duration);
 
 
-  HandPainter _handPainter() => HandPainter(handFunction,time);
+  HandPainter _handPainter() => HandPainter(handFunction,time,duration);
 
   @override
   Widget build(BuildContext context) {
