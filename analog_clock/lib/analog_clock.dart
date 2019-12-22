@@ -1,24 +1,13 @@
-// Copyright 2019 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'dart:async';
 
-import 'package:analog_clock/hand_function.dart';
+import 'package:analog_clock/drawn_hand.dart';
 import 'package:analog_clock/hour_hand.dart';
 import 'package:analog_clock/second_hand.dart';
+import 'package:analog_clock/minute_hand.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:intl/intl.dart';
-import 'package:vector_math/vector_math_64.dart' show radians;
-
-import 'drawn_hand.dart';
-import 'minute_hand.dart';
-
-/// Total distance traveled by a second or a minute hand, each second or minute,
-/// respectively.
-final radiansPerTick = radians(360 / 60);
 
 
 /// A basic analog clock.
@@ -120,7 +109,7 @@ class _AnalogClockState extends State<AnalogClock> {
   );
 
 
-  _hourHand(ThemeData t)   => DrawnHand(HourHand(t),  _now, Duration(minutes: 12));
+  _hourHand(ThemeData t)   => DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12));
   _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, Duration(minutes: 1));
   _secondHand(ThemeData t) => DrawnHand(SecondHand(t),_now, Duration(seconds: 1));
 
