@@ -120,7 +120,7 @@ class _AnalogClockState extends State<AnalogClock> {
   );
 
 
-  _hourHand(ThemeData t)   => DrawnHand(HourHand(t),  _now, Duration(hours:   1));
+  _hourHand(ThemeData t)   => DrawnHand(HourHand(t),  _now, Duration(minutes: 12));
   _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, Duration(minutes: 1));
   _secondHand(ThemeData t) => DrawnHand(SecondHand(t),_now, Duration(seconds: 1));
 
