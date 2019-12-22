@@ -80,15 +80,33 @@ class HandPainter extends CustomPainter {
   }
 
   void _paintText(Canvas canvas, Size size, Offset position, int text) {
-    final textPainter = _textPainter();
-    textPainter.layout(minWidth: 0, maxWidth: size.width,);
-    final at = position.translate(textPainter.width / -2, textPainter.height / -2);
-    textPainter.paint(canvas,at);
+    _paintTextWithPainter(canvas, size, position, text, _textBackgroundPainter());
+    _paintTextWithPainter(canvas, size, position, text, _textForegroundPainter());
   }
 
-  TextPainter _textPainter() {
+  void _paintTextWithPainter(Canvas canvas, Size size, Offset position, int text, TextPainter painter) {
+    painter.layout(minWidth: 0, maxWidth: size.width,);
+    final at = position.translate(painter.width / -2, painter.height / -2);
+    painter.paint(canvas, at);
+  }
+
+  TextPainter _textForegroundPainter() {
     final fontSize = 20 + 5 * _angleRadians(time);
-    final textStyle = TextStyle(color:Colors.black, fontSize: fontSize,);
+    final textStyle = TextStyle(
+      color:Colors.white,
+      fontSize: fontSize,);
+    final textSpan = TextSpan(text: _text().toString(), style: textStyle,);
+    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
+  }
+
+  TextPainter _textBackgroundPainter() {
+    final fontSize = 20 + 5 * _angleRadians(time);
+    final textStyle = TextStyle(
+      foreground: Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = Colors.black,
+      fontSize: fontSize,);
     final textSpan = TextSpan(text: _text().toString(), style: textStyle,);
     return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
   }
