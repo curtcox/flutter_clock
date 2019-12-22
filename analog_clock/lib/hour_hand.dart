@@ -24,7 +24,7 @@ class HourHand extends HandFunction {
       : Colors.green;
 
   @override double size(DateTime t)        => 0.5;
-  @override int text(DateTime t)           => _hour(t);
+  @override int  number(DateTime t)        => _hour(t);
   @override double thickness(DateTime now) => 16;
 
   _hour(DateTime t) => int.parse(DateFormat(model.is24HourFormat ? 'HH' : 'hh').format(t));

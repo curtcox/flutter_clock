@@ -17,7 +17,7 @@ class HandPainter extends CustomPainter {
 
   double  _handSize() => handFunction.size(time);
   double _lineWidth() => handFunction.thickness(time);
-  int         _text() => handFunction.text(time);
+  String      _text() => handFunction.text(time);
   Color      _color() => handFunction.color(time);
 
   double _angleRadians(DateTime t) => handFunction.angleRadians(t);
@@ -28,7 +28,7 @@ class HandPainter extends CustomPainter {
     final center = _center(size);
     _paintTail(canvas, size, position);
     _paintHand(canvas, center, position);
-    _paintText(canvas, size, position, _text());
+    _paintText(canvas, size, position);
   }
 
   Offset _center(Size size) => (Offset.zero & size).center;
@@ -83,12 +83,12 @@ class HandPainter extends CustomPainter {
     }
   }
 
-  void _paintText(Canvas canvas, Size size, Offset position, int text) {
-    _paintTextWithPainter(canvas, size, position, text, _textBackgroundPainter());
-    _paintTextWithPainter(canvas, size, position, text, _textForegroundPainter());
+  void _paintText(Canvas canvas, Size size, Offset position) {
+    _paintTextWithPainter(canvas, size, position, _textBackgroundPainter());
+    _paintTextWithPainter(canvas, size, position, _textForegroundPainter());
   }
 
-  void _paintTextWithPainter(Canvas canvas, Size size, Offset position, int text, TextPainter painter) {
+  void _paintTextWithPainter(Canvas canvas, Size size, Offset position, TextPainter painter) {
     painter.layout(minWidth: 0, maxWidth: size.width,);
     final at = position.translate(painter.width / -2, painter.height / -2);
     painter.paint(canvas, at);
@@ -111,7 +111,7 @@ class HandPainter extends CustomPainter {
         ..strokeWidth = 2
         ..color = Colors.black,
       fontSize: fontSize,);
-    final textSpan = TextSpan(text: _text().toString(), style: textStyle,);
+    final textSpan = TextSpan(text: _text(), style: textStyle,);
     return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
   }
 

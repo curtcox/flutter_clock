@@ -21,8 +21,9 @@ class SecondHand extends HandFunction {
       ? Colors.red
       : Colors.red;
 
-  @override double size(DateTime t)        => 1;
-  @override int text(DateTime t)           => t.second;
-  @override double thickness(DateTime now) => 5;
+  @override double      size(DateTime t) => 1;
+  @override int       number(DateTime t) => t.second;
+  @override String      text(DateTime t) => "";
+  @override double thickness(DateTime t) => 5;
 
 }

@@ -21,8 +21,8 @@ class MinuteHand extends HandFunction {
       ? Colors.blue
       : Colors.blue;
 
-  @override double size(DateTime t)        => 0.9;
-  @override int text(DateTime t)           => t.minute;
-  @override double thickness(DateTime now) => 16;
+  @override double      size(DateTime t) => 0.9;
+  @override int       number(DateTime t) => t.minute;
+  @override double thickness(DateTime t) => 16;
 
 }

@@ -17,5 +17,9 @@ abstract class HandFunction {
   double angleRadians(DateTime t);
 
   /// text to display on/for the hand
-  int text(DateTime t);
+  String text(DateTime t) => number(t).toString();
+
+  /// value of time for the hand
+  int number(DateTime t);
+
 }
