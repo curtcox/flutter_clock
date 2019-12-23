@@ -35,8 +35,13 @@ class SunPainter extends CustomPainter {
   }
 
   Paint _paint() => Paint()
-    ..color = Colors.yellow
-    ..strokeWidth = 1;
+    ..color = _color();
+
+  Color _color() => _tween(Colors.red,Colors.yellow);
+
+  Color _tween(Color a, Color b) =>
+      Color.fromARGB(255,_mix(a.red,b.red),_mix(a.green,b.green),_mix(a.blue,b.blue));
+  int _mix(int a, int b) => (a * _y() + b * (1.0 - _y())).toInt();
 
   Offset _center(Size size) => Offset(_x() * size.width,_y() * size.height);
 
