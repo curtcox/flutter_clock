@@ -8,12 +8,12 @@ import 'hand.dart';
 /// [CustomPainter] that draws a clock hand.
 class HandPainter extends CustomPainter {
 
-  HandPainter(@required this.handFunction, @required this.time, @required this.duration)
-      : assert(handFunction != null), assert(time != null), assert(duration != null) ;
-
   HandFunction handFunction;
   DateTime time;
   Duration duration;
+
+  HandPainter(@required this.handFunction, @required this.time, @required this.duration)
+      : assert(handFunction != null), assert(time != null), assert(duration != null) ;
 
   double  _handSize() => handFunction.size(time);
   double _lineWidth() => handFunction.thickness(time);
@@ -41,14 +41,12 @@ class HandPainter extends CustomPainter {
     _center(size) + Offset(_x(t), _y(t)) * _length(size);
 
   Paint _handPaint() => Paint()
-    ..color = _color()
-    ..strokeWidth = _lineWidth() / 7
-    ..strokeCap = StrokeCap.square;
+    ..color       = _color()
+    ..strokeWidth = _lineWidth() / 7;
 
   Paint _trailPaint(int alpha) => Paint()
-    ..color = _color().withAlpha(alpha)
-    ..strokeWidth = 1 // _lineWidth() * ((256 - alpha) / 300)
-    ..strokeCap = StrokeCap.square;
+    ..color       = _color().withAlpha(alpha)
+    ..strokeWidth = 1;
 
   void _paintHand(Canvas canvas, Offset center, Offset position) {
     final paint = _handPaint();
@@ -62,8 +60,7 @@ class HandPainter extends CustomPainter {
   void _paintTail(Canvas canvas, Size size, Offset position) {
     double alpha = 255;
     DateTime t = time;
-    Offset last = _position(size,t);
-    double x = last.dx;
+    double x = _position(size,t).dx;
     double delta = 1;
 
     while(x>0) {
@@ -71,7 +68,6 @@ class HandPainter extends CustomPainter {
       delta = delta * 1.011;
       t = t.subtract(duration * 0.09);
       final y = _position(size,t).dy;
-      last  = Offset(x,y);
       final top    = Offset(x,y - delta);
       final bottom = Offset(x,y + delta);
       alpha = alpha * 0.995;

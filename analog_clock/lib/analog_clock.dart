@@ -4,15 +4,13 @@ import 'package:analog_clock/drawn_hand.dart';
 import 'package:analog_clock/hour_hand.dart';
 import 'package:analog_clock/second_hand.dart';
 import 'package:analog_clock/minute_hand.dart';
+import 'package:analog_clock/sun.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:intl/intl.dart';
 
 
-/// A basic analog clock.
-///
-/// You can do better than this!
 class AnalogClock extends StatefulWidget {
   const AnalogClock(this.model);
 
@@ -112,6 +110,7 @@ class _AnalogClockState extends State<AnalogClock> {
   _hourHand(ThemeData t)   => DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12));
   _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, Duration(minutes: 1));
   _secondHand(ThemeData t) => DrawnHand(SecondHand(t),_now, Duration(seconds: 1));
+  _sun(ThemeData t)        => Sun(t,_now);
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +127,7 @@ class _AnalogClockState extends State<AnalogClock> {
         color: customTheme.backgroundColor,
         child: Stack(
           children: [
+            _sun(customTheme),
             _secondHand(customTheme),
             _minuteHand(customTheme),
             _hourHand(customTheme),
