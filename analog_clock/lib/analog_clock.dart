@@ -72,27 +72,6 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-  // There are many ways to apply themes to your clock. Some are:
-  //  - Inherit the parent Theme (see ClockCustomizer in the flutter_clock_helper package).
-  //  - Override the Theme.of(context).colorScheme.
-  //  - Create your own [ThemeData], demonstrated in [AnalogClock].
-  //  - Create a map of [Color]s to custom keys, demonstrated in [DigitalClock].
-  ThemeData _customTheme(BuildContext context) =>
-      // primary, highlight, accent -> Hour, Minute, Second hand.
-      Theme.of(context).brightness == Brightness.light
-      ? Theme.of(context).copyWith(
-          primaryColor: Color(0xFF4285F4),
-          highlightColor: Color(0xFF8AB4F8),
-          accentColor: Color(0xFF669DF6),
-          backgroundColor: Color(0xFFFFFF),
-        )
-      : Theme.of(context).copyWith(
-          primaryColor: Color(0xFFD2E3FC),
-          highlightColor: Color(0xFF4285F4),
-          accentColor: Color(0xFF8AB4F8),
-          backgroundColor: Color(0x000000),
-        );
-
   DefaultTextStyle _weatherInfo(ThemeData customTheme) => DefaultTextStyle(
     style: TextStyle(color: customTheme.primaryColor),
     child: Column(
@@ -116,12 +95,15 @@ class _AnalogClockState extends State<AnalogClock> {
   _sun(ThemeData t)        => Sun(t,_now);
 
   bool _windy() => _condition.toLowerCase() == 'windy';
+  Color _backgroundColor(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light
+          ? Color(0xFFA8DDFF) : Color(0xFF000000);
 
   @override
   Widget build(BuildContext context) {
-    final customTheme = _customTheme(context);
     final time = DateFormat.Hms().format(DateTime.now());
-    final weatherInfo = _weatherInfo(customTheme);
+    final theme = Theme.of(context);
+    final weatherInfo = _weatherInfo(theme);
 
     return Semantics.fromProperties(
       properties: SemanticsProperties(
@@ -129,13 +111,13 @@ class _AnalogClockState extends State<AnalogClock> {
         value: time,
       ),
       child: Container(
-        color: customTheme.backgroundColor,
+        color: _backgroundColor(context),
         child: Stack(
           children: [
-            _sun(customTheme),
-            _secondHand(customTheme),
-            _minuteHand(customTheme),
-            _hourHand(customTheme),
+            _sun(theme),
+            _secondHand(theme),
+            _minuteHand(theme),
+            _hourHand(theme),
             Positioned(
               left: 0,
               bottom: 0,

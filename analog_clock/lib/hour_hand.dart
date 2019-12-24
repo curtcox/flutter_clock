@@ -21,7 +21,7 @@ class HourHand extends HandFunction {
 
   @override Color color(DateTime t) => theme.brightness == Brightness.light
       ? Colors.green
-      : Colors.green;
+      : Colors.lightGreenAccent;
 
   @override double size(DateTime t)        => 0.5;
   @override int  number(DateTime t)        => _hour(t);

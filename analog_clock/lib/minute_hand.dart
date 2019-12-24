@@ -19,7 +19,7 @@ class MinuteHand extends HandFunction {
 
   @override Color color(DateTime t) => theme.brightness == Brightness.light
       ? Colors.blue
-      : Colors.blue;
+      : Colors.lightBlueAccent;
 
   @override double      size(DateTime t) => 0.9;
   @override int       number(DateTime t) => t.minute;

@@ -19,7 +19,7 @@ class SecondHand extends HandFunction {
 
   @override Color color(DateTime t) => theme.brightness == Brightness.light
       ? Colors.red
-      : Colors.red;
+      : Colors.redAccent;
 
   @override double      size(DateTime t) => 1;
   @override int       number(DateTime t) => t.second;
