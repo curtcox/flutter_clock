@@ -107,10 +107,15 @@ class _AnalogClockState extends State<AnalogClock> {
   );
 
 
-  _hourHand(ThemeData t)   => DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12));
-  _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, Duration(minutes: 1));
-  _secondHand(ThemeData t) => DrawnHand(SecondHand(t),_now, Duration(seconds: 1));
+  _hourHand(ThemeData t)   =>
+      DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12), _windy());
+  _minuteHand(ThemeData t) =>
+      DrawnHand(MinuteHand(t),_now, Duration(minutes: 1), _windy());
+  _secondHand(ThemeData t) =>
+      DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _windy());
   _sun(ThemeData t)        => Sun(t,_now);
+
+  bool _windy() => _condition.toLowerCase() == 'windy';
 
   @override
   Widget build(BuildContext context) {

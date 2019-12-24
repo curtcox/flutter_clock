@@ -8,11 +8,12 @@ import 'hand.dart';
 /// [CustomPainter] that draws a clock hand.
 class HandPainter extends CustomPainter {
 
-  HandFunction handFunction;
-  DateTime time;
-  Duration duration;
+  final HandFunction handFunction;
+  final DateTime time;
+  final Duration duration;
+  final bool windy;
 
-  HandPainter(@required this.handFunction, @required this.time, @required this.duration)
+  HandPainter(@required this.handFunction, @required this.time, @required this.duration, @required this.windy)
       : assert(handFunction != null), assert(time != null), assert(duration != null) ;
 
   double  _handSize() => handFunction.size(time);
@@ -63,11 +64,11 @@ class HandPainter extends CustomPainter {
     double x = _position(size,t).dx;
     double delta = 1;
 
-    while(x>0) {
+    while (x > 0) {
       x = x - 1;
       delta = delta * 1.011;
       t = t.subtract(duration * 0.09);
-      final y = _position(size,t).dy;
+      final y      = _position(size,t).dy + _wind(x,delta);
       final top    = Offset(x,y - delta);
       final bottom = Offset(x,y + delta);
       alpha = alpha * 0.995;
@@ -78,6 +79,17 @@ class HandPainter extends CustomPainter {
       canvas.drawLine(top, bottom, paint);
     }
   }
+
+  double _shift() {
+      final now = DateTime.now();
+      return now.minute.toDouble() * 60 +
+             now.second.toDouble() +
+             now.millisecond / 1000;
+  }
+
+
+  double _wind(double x, double delta) => windy
+      ? math.sin(x * 0.1 + _shift() * 5.9) * delta * 1.7 : 0.0;
 
   void _paintText(Canvas canvas, Size size, Offset position) {
     _paintTextWithPainter(canvas, size, position, _textBackgroundPainter());
