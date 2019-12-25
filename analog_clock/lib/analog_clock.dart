@@ -5,6 +5,7 @@ import 'package:analog_clock/hour_hand.dart';
 import 'package:analog_clock/second_hand.dart';
 import 'package:analog_clock/minute_hand.dart';
 import 'package:analog_clock/sun.dart';
+import 'package:analog_clock/thermometer.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -93,6 +94,10 @@ class _AnalogClockState extends State<AnalogClock> {
   _secondHand(ThemeData t) =>
       DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _windy());
   _sun(ThemeData t)        => Sun(t,_now);
+  _thermometer(ThemeData t) {
+    final m = widget.model;
+    return Thermometer(t,m.unit,m.temperature,m.low,m.high);
+  }
 
   bool _windy() => _condition.toLowerCase() == 'windy';
   Color _backgroundColor(BuildContext context) =>
@@ -118,6 +123,7 @@ class _AnalogClockState extends State<AnalogClock> {
             _secondHand(theme),
             _minuteHand(theme),
             _hourHand(theme),
+            _thermometer(theme),
             Positioned(
               left: 0,
               bottom: 0,
