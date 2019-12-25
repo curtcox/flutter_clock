@@ -74,8 +74,8 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-  DefaultTextStyle _weatherInfo(ThemeData customTheme) => DefaultTextStyle(
-    style: TextStyle(color: customTheme.primaryColor),
+  DefaultTextStyle _weatherInfo(BuildContext context,ThemeData customTheme) => DefaultTextStyle(
+    style: TextStyle(color: _foregroundColor(context)),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -104,12 +104,15 @@ class _AnalogClockState extends State<AnalogClock> {
   Color _backgroundColor(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
           ? Color(0xFFA8DDFF) : Color(0xFF000000);
+  Color _foregroundColor(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light
+          ? Color(0xFF000000) : Color(0xFFffffff);
 
   @override
   Widget build(BuildContext context) {
     final time = DateFormat.Hms().format(DateTime.now());
     final theme = Theme.of(context);
-    final weatherInfo = _weatherInfo(theme);
+    final weatherInfo = _weatherInfo(context,theme);
 
     return Semantics.fromProperties(
       properties: SemanticsProperties(
