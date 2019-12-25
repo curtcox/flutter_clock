@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analog_clock/cloudy.dart';
 import 'package:analog_clock/drawn_hand.dart';
 import 'package:analog_clock/hour_hand.dart';
 import 'package:analog_clock/second_hand.dart';
@@ -95,6 +96,7 @@ class _AnalogClockState extends State<AnalogClock> {
   _secondHand(ThemeData t) =>
       DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _windy());
   _sun(ThemeData t)        => Sun(t,_now);
+  _cloudy(ThemeData t)     => Cloudy(t,_now);
   _thermometer(ThemeData t) {
     final m = widget.model;
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
@@ -124,6 +126,7 @@ class _AnalogClockState extends State<AnalogClock> {
         child: Stack(
           children: [
             _sun(theme),
+            _cloudy(theme),
             _secondHand(theme),
             _minuteHand(theme),
             _hourHand(theme),
