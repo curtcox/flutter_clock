@@ -56,10 +56,11 @@ class _AnalogClockState extends State<AnalogClock> {
 
   void _updateModel() {
     setState(() {
-      _temperature = widget.model.temperatureString;
-      _temperatureRange = '(${widget.model.low} - ${widget.model.highString})';
-      _condition = widget.model.weatherString;
-      _location = widget.model.location;
+      final model = widget.model;
+      _temperature = model.temperatureString;
+      _temperatureRange = '(${model.lowString} - ${model.highString})';
+      _condition = model.weatherString;
+      _location = model.location;
     });
   }
 

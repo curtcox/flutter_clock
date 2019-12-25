@@ -1,4 +1,4 @@
-import 'dart:math' as math;import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clock_helper/model.dart';
 
 class Thermometer extends StatelessWidget {
@@ -58,7 +58,10 @@ class ThermometerPainter extends CustomPainter {
 
   _low()     { _mark(low);}
   _high()    { _mark(high); }
-  _current() { _mark(current); }
+  _current() {
+    _mark(current);
+    _paintMarkText(current,20.0);
+  }
 
   num _celsius(num degrees) {
     switch (unit) {
@@ -87,7 +90,6 @@ class ThermometerPainter extends CustomPainter {
   Rect _oval(double r) => _ltrb(_w - r -2.5, _h - r, _w + r - 2.5, _h + r);
   Rect _ltrb(double l,double t,double r,double b) => Rect.fromLTRB(l,t,r,b);
 
-  Paint  _white() => _paint(Colors.white);
   Paint    _red() => _paint(Colors.red);
   Paint  _black() => _paint(Colors.black);
   Paint  _glass() => _paint(Color(0xFFeeeeee));
@@ -96,7 +98,48 @@ class ThermometerPainter extends CustomPainter {
   Paint _paint(Color c) => Paint()
     ..color = c;
 
-  double _temp(num t) => _h / 2;
+  void _paintMarkText(double temp, double fontSize) {
+    String text = _withUnit(temp);
+    Offset position = Offset(_w - 50,_cy(temp));
+    _paintTextWithPainter(position, _textBackgroundPainter(text,fontSize));
+    _paintTextWithPainter(position, _textForegroundPainter(text,fontSize));
+  }
+
+  /// Temperature unit of measurement with degrees.
+  String _withUnit(num temp) {
+    switch (unit) {
+      case TemperatureUnit.fahrenheit:
+        return temp.toStringAsFixed(1) + '°F';
+      case TemperatureUnit.celsius:
+      default:
+        return temp.toStringAsFixed(1) + '°C';
+    }
+  }
+
+  void _paintTextWithPainter(Offset position, TextPainter painter) {
+    painter.layout(minWidth: 0, maxWidth: _w,);
+    final at = position.translate(painter.width / -2, painter.height / -2);
+    painter.paint(_canvas, at);
+  }
+
+  TextPainter _textForegroundPainter(String text, double fontSize) {
+    final textStyle = TextStyle(
+      color:Colors.white,
+      fontSize: fontSize,);
+    final textSpan = TextSpan(text: text, style: textStyle,);
+    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
+  }
+
+  TextPainter _textBackgroundPainter(String text, double fontSize) {
+    final textStyle = TextStyle(
+      foreground: Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = Colors.black,
+      fontSize: fontSize,);
+    final textSpan = TextSpan(text: text, style: textStyle,);
+    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
+  }
 
   @override
   bool shouldRepaint(ThermometerPainter old) => true;

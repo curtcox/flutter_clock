@@ -87,7 +87,6 @@ class HandPainter extends CustomPainter {
              now.millisecond / 1000;
   }
 
-
   double _wind(double x, double delta) => windy
       ? math.sin(x * 0.1 + _shift() * 5.9) * delta * 1.7 : 0.0;
 
@@ -107,7 +106,7 @@ class HandPainter extends CustomPainter {
     final textStyle = TextStyle(
       color:Colors.white,
       fontSize: fontSize,);
-    final textSpan = TextSpan(text: _text().toString(), style: textStyle,);
+    final textSpan = TextSpan(text: _text(), style: textStyle,);
     return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
   }
 
