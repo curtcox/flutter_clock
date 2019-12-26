@@ -1,3 +1,4 @@
+import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
 
 class Foggy extends StatelessWidget {
@@ -64,15 +65,7 @@ class FoggyPainter extends CustomPainter {
 
   double _radius(double r) => (r * _size.height) / 5;
 
-  double _x(double speed, double offset) => 1.0 - _cycle(speed, offset);
-
-  double _cycle(double speed, double offset) {
-      double t = _time() * speed + offset;
-      return (t - t.toInt()) * 1.8 - 0.4;
-  }
-  double _time() =>
-      (time.hour * 3600.0 + time.minute * 60.0 + time.second + time.millisecond / 1000.0) /
-          (24.0 * 60.0 * 60.0);
+  double _x(double speed, double offset) => TimeCycle.at(time,speed,offset,1.8,0.4);
 
   @override
   bool shouldRepaint(FoggyPainter old) => true;

@@ -1,3 +1,4 @@
+import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
 
 class Cloudy extends StatelessWidget {
@@ -89,15 +90,7 @@ class CloudyPainter extends CustomPainter {
 
   double _radius(double r) => (r * _size.height) / 5;
 
-  double _x(double speed) => 1.0 - _cycle(speed);
-
-  double _cycle(double speed) {
-      double t = _time() * speed;
-      return (t - t.toInt()) * 1.4 - 0.2;
-  }
-  double _time() =>
-      (time.hour * 3600.0 + time.minute * 60.0 + time.second + time.millisecond / 1000.0) /
-          (24.0 * 60.0 * 60.0);
+  double _x(double speed) => TimeCycle.at(time,speed,0.0,1.4,0.2);
 
   @override
   bool shouldRepaint(CloudyPainter old) => true;
