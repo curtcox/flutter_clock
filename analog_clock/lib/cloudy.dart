@@ -43,17 +43,17 @@ class CloudyPainter extends CustomPainter {
   }
 
   void _paintClouds() {
-      _cloud1(0.0,100);
-      _cloud2(0.1,200);
-      _cloud3(0.2,300);
-      _cloud1(0.3,150);
-      _cloud2(0.4,250);
-      _cloud3(0.5,350);
-      _cloud1(0.6,050);
-      _cloud2(0.7,175);
-      _cloud3(0.8,275);
-      _cloud1(0.9,125);
-      _cloud2(1.0,145);
+      _cloud1(0.0,101);
+      _cloud2(0.1,203);
+      _cloud3(0.2,307);
+      _cloud1(0.3,151);
+      _cloud2(0.4,252);
+      _cloud3(0.5,357);
+      _cloud1(0.6,057);
+      _cloud2(0.7,177);
+      _cloud3(0.8,277);
+      _cloud1(0.9,127);
+      _cloud2(1.0,147);
   }
 
   void _cloud1(double y, double speed) {

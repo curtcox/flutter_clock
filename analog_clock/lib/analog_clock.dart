@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:intl/intl.dart';
 
+import 'foggy.dart';
+
 
 class AnalogClock extends StatefulWidget {
   const AnalogClock(this.model);
@@ -97,6 +99,7 @@ class _AnalogClockState extends State<AnalogClock> {
       DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _windy());
   _sun(ThemeData t)        => Sun(t,_now);
   _cloudy(ThemeData t)     => Cloudy(t,_now,_isCloudy());
+  _foggy(ThemeData t)      => Foggy(t,_now,_isFoggy());
   _thermometer(ThemeData t) {
     final m = widget.model;
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
@@ -104,6 +107,7 @@ class _AnalogClockState extends State<AnalogClock> {
 
   bool _windy() => _condition.toLowerCase() == 'windy';
   bool _isCloudy() => _condition.toLowerCase() == 'cloudy';
+  bool _isFoggy() => _condition.toLowerCase() == 'foggy';
   Color _backgroundColor(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
           ? Color(0xFFA8DDFF) : Color(0xFF000000);
@@ -128,6 +132,7 @@ class _AnalogClockState extends State<AnalogClock> {
           children: [
             _sun(theme),
             _cloudy(theme),
+            _foggy(theme),
             _secondHand(theme),
             _minuteHand(theme),
             _hourHand(theme),
