@@ -44,14 +44,16 @@ class FoggyPainter extends CustomPainter {
   }
 
   void _paintFog() {
-      _circle(0.0,0.5,2.5,Color.fromARGB(80, 230, 230, 230),42,0.0);
-      _circle(0.0,0.5,2.5,Color.fromARGB(80, 240, 240, 240),42,0.25);
-      _circle(0.0,0.5,2.5,Color.fromARGB(80, 250, 250, 250),42,0.5);
-      _circle(0.0,0.5,2.5,Color.fromARGB(80, 255, 255, 255),42,0.75);
-      _circle(0.0,0.5,2.6,Color.fromARGB(80, 245, 245, 245),87,0.2);
-      _circle(0.0,0.5,2.6,Color.fromARGB(80, 220, 220, 220),87,0.4);
-      _circle(0.0,0.5,2.6,Color.fromARGB(80, 225, 225, 225),87,0.6);
+      _circle(0.0,0.5,2.5,gray(230),42,0.0);
+      _circle(0.0,0.5,2.5,gray(240),42,0.25);
+      _circle(0.0,0.5,2.5,gray(250),42,0.5);
+      _circle(0.0,0.5,2.5,gray(255),42,0.75);
+      _circle(0.0,0.5,2.6,gray(245),87,0.2);
+      _circle(0.0,0.5,2.6,gray(220),87,0.4);
+      _circle(0.0,0.5,2.6,gray(225),87,0.6);
   }
+
+  Color gray(int value) => Color.fromARGB(80, value, value, value);
 
   void _circle(double x, double y, double r, Color color, double speed,double offset) {
     _canvas.drawCircle(_center(x,y,speed,offset), _radius(r), _paint(color));

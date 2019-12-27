@@ -58,25 +58,27 @@ class CloudyPainter extends CustomPainter {
   }
 
   void _cloud1(double y, double speed) {
-      _circle(-0.05,  0.01 + y,  0.6,  Color(0xccFFFFFF), speed);
-      _circle( 0.0,   0.02 + y,  0.75, Color(0xccEEEEEE), speed);
-      _circle( 0.07,  0.06 + y,  0.5,  Color(0xccF8F8F8), speed);
+      _circle(-0.05,  0.01 + y,  0.6,  gray(0xFF), speed);
+      _circle( 0.0,   0.02 + y,  0.75, gray(0xEE), speed);
+      _circle( 0.07,  0.06 + y,  0.5,  gray(0xF8), speed);
   }
 
   void _cloud2(double y, double speed) {
-    _circle(-0.04,  0.01 + y,  0.6,  Color(0xccFFFFFF), speed);
-    _circle(-0.08,  0.0  + y,  0.6,  Color(0xccEEEEEE), speed);
-    _circle( 0.09,  0.06 + y,  0.6,  Color(0xccF8F8F8), speed);
-    _circle( 0.06, -0.06 + y,  0.7,  Color(0xccFBFBFB), speed);
+    _circle(-0.04,  0.01 + y,  0.6,  gray(0xFF), speed);
+    _circle(-0.08,  0.0  + y,  0.6,  gray(0xEE), speed);
+    _circle( 0.09,  0.06 + y,  0.6,  gray(0xF8), speed);
+    _circle( 0.06, -0.06 + y,  0.7,  gray(0xFB), speed);
   }
 
   void _cloud3(double y, double speed) {
-    _circle(-0.04,  0.02 + y,  0.55,  Color(0xccFFFFFF), speed);
-    _circle(-0.08, -0.0  + y,  0.65,  Color(0xccEEEEEE), speed);
-    _circle( 0.08,  0.06 + y,  0.6,   Color(0xccF8F8F8), speed);
-    _circle( 0.06, -0.04 + y,  0.44,  Color(0xccFBFBFB), speed);
-    _circle(-0.06, -0.06 + y,  0.68,  Color(0xccF4F4F4), speed);
+    _circle(-0.04,  0.02 + y,  0.55,  gray(0xFF), speed);
+    _circle(-0.08, -0.0  + y,  0.65,  gray(0xEE), speed);
+    _circle( 0.08,  0.06 + y,  0.6,   gray(0xF8), speed);
+    _circle( 0.06, -0.04 + y,  0.44,  gray(0xFB), speed);
+    _circle(-0.06, -0.06 + y,  0.68,  gray(0xF4), speed);
   }
+
+  Color gray(int value) => Color.fromARGB(0xCC, value, value, value);
 
   void _circle(double x, double y, double r, Color color, double speed) {
     _canvas.drawCircle(_center(x,y,speed), _radius(r), _paint(color));
