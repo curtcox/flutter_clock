@@ -44,7 +44,7 @@ class SnowyPainter extends CustomPainter {
 
   void _oval(double x, double r, Color color, double speed) {
     final width = _radius(r) * 0.11;
-    final height = width * 2.02;
+    final height = width * 1.0;
     final rect = Rect.fromCenter(center:_center(x,speed),width: width,height:height);
     _canvas.drawOval(rect, _paint(color));
   }
