@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:analog_clock/cloudy.dart';
 import 'package:analog_clock/drawn_hand.dart';
 import 'package:analog_clock/hour_hand.dart';
+import 'package:analog_clock/rainy.dart';
 import 'package:analog_clock/second_hand.dart';
 import 'package:analog_clock/minute_hand.dart';
+import 'package:analog_clock/snowy.dart';
 import 'package:analog_clock/sun.dart';
 import 'package:analog_clock/thermometer.dart';
+import 'package:analog_clock/thunderstorm.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -92,22 +95,23 @@ class _AnalogClockState extends State<AnalogClock> {
 
 
   _hourHand(ThemeData t)   =>
-      DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12), _windy());
+      DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12), _is('windy'));
   _minuteHand(ThemeData t) =>
-      DrawnHand(MinuteHand(t),_now, Duration(minutes: 1), _windy());
+      DrawnHand(MinuteHand(t),_now, Duration(minutes: 1), _is('windy'));
   _secondHand(ThemeData t) =>
-      DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _windy());
-  _sun(ThemeData t)        => Sun(t,_now);
-  _cloudy(ThemeData t)     => Cloudy(t,_now,_isCloudy());
-  _foggy(ThemeData t)      => Foggy(t,_now,_isFoggy());
+      DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _is('windy'));
+  _sun(ThemeData t)          => Sun(t,_now);
+  _cloudy(ThemeData t)       => Cloudy(t,_now,_is('cloudy'));
+  _foggy(ThemeData t)        => Foggy(t,_now,_is('foggy'));
+  _rainy(ThemeData t)        => Rainy(t,_now,_is('rainy'));
+  _snowy(ThemeData t)        => Snowy(t,_now,_is('snowy'));
+  _thunderstorm(ThemeData t) => Thunderstorm(t,_now,_is('thunderstorm'));
   _thermometer(ThemeData t) {
     final m = widget.model;
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
   }
 
-  bool _windy() => _condition.toLowerCase() == 'windy';
-  bool _isCloudy() => _condition.toLowerCase() == 'cloudy';
-  bool _isFoggy() => _condition.toLowerCase() == 'foggy';
+  bool _is(String condition)  => _condition.toLowerCase() == condition;
   Color _backgroundColor(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
           ? Color(0xFFA8DDFF) : Color(0xFF000000);
@@ -133,6 +137,9 @@ class _AnalogClockState extends State<AnalogClock> {
             _sun(theme),
             _cloudy(theme),
             _foggy(theme),
+            _thunderstorm(theme),
+            _rainy(theme),
+            _snowy(theme),
             _secondHand(theme),
             _minuteHand(theme),
             _hourHand(theme),
