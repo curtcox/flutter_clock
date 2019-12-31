@@ -26,18 +26,20 @@ class RainyPainter extends CustomPainter {
   }
 
   void _paintRain() {
-      _drop(0.5,400);
+      for (int i=0; i<99; i++) {
+        _drop(0.01 * i,16000 + (i * i).toDouble());
+      }
   }
 
   void _drop(double x, double speed) {
-      _oval(x,  0.1, gray(0xFF), speed);
+      _oval(x, 0.1, gray(0xAA), speed);
   }
 
-  Color gray(int value) => Color.fromARGB(0xCC, value, value, value);
+  Color gray(int value) => Color.fromARGB(0xFF, value, value, value);
 
   void _oval(double x, double r, Color color, double speed) {
-    final width = _radius(r) * 2.22;
-    final height = width * 0.62;
+    final width = _radius(r) * 0.22;
+    final height = width * 2.22;
     final rect = Rect.fromCenter(center:_center(x,speed),width: width,height:height);
     _canvas.drawOval(rect, _paint(color));
   }
@@ -46,7 +48,7 @@ class RainyPainter extends CustomPainter {
     ..color = color;
 
   Offset _center(double x, double speed)
-    => Offset(x * _size.width,  _y(speed) * _size.height);
+    => Offset(x * _size.width, (1.0 - _y(speed)) * _size.height);
 
   double _radius(double r) => (r * _size.height) / 5;
 
