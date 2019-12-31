@@ -1,43 +1,25 @@
 import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
+import 'ConditionalPainter.dart';
 
-class Cloudy extends StatelessWidget {
+class Cloudy extends ConditionalPainter {
 
-  final ThemeData theme;
-  final DateTime time;
-  final bool cloudy;
-
-  Cloudy(this.theme,this.time,this.cloudy);
-
-  CloudyPainter _painter() => CloudyPainter(time,cloudy);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox.expand(
-        child: CustomPaint(
-          painter: _painter(),
-        ),
-      ),
-    );
-  }
+  Cloudy(theme,time,enabled) : super(theme,time,enabled);
+  painter() => CloudyPainter(time);
 
 }
 
 class CloudyPainter extends CustomPainter {
 
   DateTime time;
-  bool cloudy;
+
   Canvas _canvas;
   Size _size;
 
-  CloudyPainter(@required this.time,this.cloudy);
+  CloudyPainter(this.time);
 
   @override
   void paint(Canvas canvas, Size size) {
-      if (!cloudy) {
-          return;
-      }
       _canvas = canvas;
       _size = size;
       _paintClouds();

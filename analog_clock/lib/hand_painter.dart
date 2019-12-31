@@ -3,8 +3,6 @@ import 'dart:math' as math;
 import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
-import 'hand.dart';
-
 /// [CustomPainter] that draws a clock hand.
 class HandPainter extends CustomPainter {
 

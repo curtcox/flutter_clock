@@ -1,43 +1,25 @@
 import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
 
-class Foggy extends StatelessWidget {
+import 'ConditionalPainter.dart';
 
-  final ThemeData theme;
-  final DateTime time;
-  final bool foggy;
+class Foggy extends ConditionalPainter {
 
-  Foggy(this.theme,this.time,this.foggy);
-
-  FoggyPainter _painter() => FoggyPainter(time,foggy);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox.expand(
-        child: CustomPaint(
-          painter: _painter(),
-        ),
-      ),
-    );
-  }
+  Foggy(theme,time,enabled) : super(theme,time,enabled);
+  painter() => FoggyPainter(time);
 
 }
 
 class FoggyPainter extends CustomPainter {
 
   DateTime time;
-  bool foggy;
   Canvas _canvas;
   Size _size;
 
-  FoggyPainter(@required this.time,this.foggy);
+  FoggyPainter(this.time);
 
   @override
   void paint(Canvas canvas, Size size) {
-      if (!foggy) {
-          return;
-      }
       _canvas = canvas;
       _size = size;
       _paintFog();

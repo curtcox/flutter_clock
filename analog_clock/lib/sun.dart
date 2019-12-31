@@ -1,25 +1,11 @@
-import 'dart:math' as math;import 'package:flutter/material.dart';
+import 'dart:math' as math;import 'package:analog_clock/ConditionalPainter.dart';
+import 'package:flutter/material.dart';
 
 /// A sun that is drawn with [CustomPainter]
-class Sun extends StatelessWidget {
+class Sun extends ConditionalPainter {
 
-  ThemeData theme;
-  DateTime time;
-
-  Sun(this.theme,this.time);
-
-  SunPainter _painter() => SunPainter(time);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox.expand(
-        child: CustomPaint(
-          painter: _painter(),
-        ),
-      ),
-    );
-  }
+  Sun(theme,time) : super(theme,time,true);
+  painter() => SunPainter(time);
 
 }
 
