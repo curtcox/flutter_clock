@@ -30,15 +30,12 @@ class DropPainter extends CustomPainter {
   }
 
   void _drop(double x, double distance) {
-      double size = 10 / distance;
-      _oval(x, size, speed / distance);
+      double size = 0.5 / distance;
+      _circle(x, size, speed / distance);
   }
 
-  void _oval(double x, double r, double vertical) {
-    final width = _radius(r) * 0.11;
-    final height = width * aspectRatio;
-    final rect = Rect.fromCenter(center:_center(x,vertical),width: width,height:height);
-    _canvas.drawOval(rect, _paint(color));
+  void _circle(double x, double r, double vertical) {
+    _canvas.drawCircle(_center(x,vertical), _radius(r), _paint(color));
   }
 
   Paint _paint(Color color) => Paint()
