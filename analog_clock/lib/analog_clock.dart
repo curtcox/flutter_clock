@@ -123,7 +123,6 @@ class _AnalogClockState extends State<AnalogClock> {
   Widget build(BuildContext context) {
     final time = DateFormat.Hms().format(DateTime.now());
     final theme = Theme.of(context);
-    final weatherInfo = _weatherInfo(context,theme);
 
     return Semantics.fromProperties(
       properties: SemanticsProperties(
@@ -144,17 +143,19 @@ class _AnalogClockState extends State<AnalogClock> {
             _minuteHand(theme),
             _hourHand(theme),
             _thermometer(theme),
-            Positioned(
-              left: 0,
-              bottom: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: weatherInfo,
-              ),
-            ),
+            _weatherInset(context, theme)
           ],
         ),
       ),
     );
   }
+
+  Positioned _weatherInset(BuildContext context,ThemeData theme) => Positioned(
+        left: 0,
+        bottom: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: _weatherInfo(context,theme),
+        ),
+      );
 }

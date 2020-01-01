@@ -10,8 +10,10 @@ class Thunderstorm extends StatelessWidget {
 
   Thunderstorm(this.theme,this.time,this.enabled);
 
-  @override
-  Widget build(BuildContext context) => Container(
+  @override Widget build(BuildContext context) => enabled ? _sky() : _empty();
+
+  Widget _empty() => Center();
+  Widget _sky() => Container(
         color: _skyColor(),
         child: Stack(
           children: [
@@ -27,6 +29,5 @@ class Thunderstorm extends StatelessWidget {
   Color _skyColor() => _flash() ? _bolt : _clear;
 
   bool _flash() => time.second % 2 == 1 && time.millisecond < 100;
-
 
 }
