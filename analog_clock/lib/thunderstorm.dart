@@ -28,6 +28,9 @@ class Thunderstorm extends StatelessWidget {
 
   Color _skyColor() => _flash() ? _bolt : _clear;
 
-  bool _flash() => time.second % 2 == 1 && time.millisecond < 100;
-
+  bool _flash() => _flashSecond(time.second) && time.millisecond < 100;
+  bool _flashSecond(second) =>
+      second == 1  ||
+      second == 37 ||
+      second == 38;
 }

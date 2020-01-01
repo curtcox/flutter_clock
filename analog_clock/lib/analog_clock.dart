@@ -110,13 +110,18 @@ class _AnalogClockState extends State<AnalogClock> {
     final m = widget.model;
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
   }
+  bool _isStorming() => _is('rainy') || _is('thunderstorm');
 
+  Color _darkThemeSky = Color(0xFF000000);
+  Color _sunnySky     = Color(0xFFA8DDFF);
+  Color _stormySky    = Color(0xFF88AACC);
+  bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
   bool _is(String condition)  => _condition.toLowerCase() == condition;
-  Color _backgroundColor(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light
-          ? Color(0xFFA8DDFF) : Color(0xFF000000);
-  Color _foregroundColor(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light
+  Color _skyColor(BuildContext context) => _lightTheme(context)
+          ? _lightThemeSky() : _darkThemeSky;
+  Color _lightThemeSky() => _isStorming() ? _stormySky : _sunnySky;
+
+  Color _foregroundColor(BuildContext context) => _lightTheme(context)
           ? Color(0xFF000000) : Color(0xFFffffff);
 
   @override
@@ -130,7 +135,7 @@ class _AnalogClockState extends State<AnalogClock> {
         value: time,
       ),
       child: Container(
-        color: _backgroundColor(context),
+        color: _skyColor(context),
         child: Stack(
           children: [
             _sun(theme),
