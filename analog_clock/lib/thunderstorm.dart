@@ -1,50 +1,32 @@
-import 'package:analog_clock/time_cycle.dart';
+import 'package:analog_clock/rainy.dart';
 import 'package:flutter/material.dart';
-import 'ConditionalPainter.dart';
+import 'cloudy.dart';
 
-class Thunderstorm extends ConditionalPainter {
+class Thunderstorm extends StatelessWidget {
 
-  Thunderstorm(theme,time,enabled) : super(theme,time,enabled);
-  painter() => ThunderstormPainter(time);
+  final ThemeData theme;
+  final DateTime time;
+  final bool enabled;
 
-}
-
-class ThunderstormPainter extends CustomPainter {
-
-  DateTime time;
-
-  Canvas _canvas;
-  Size _size;
-
-  ThunderstormPainter(this.time);
+  Thunderstorm(this.theme,this.time,this.enabled);
 
   @override
-  void paint(Canvas canvas, Size size) {
-      if (_shouldFlash()) {
-        _canvas = canvas;
-        _size = size;
-        _paintFlash();
-        _paintLightning();
-      }
-  }
+  Widget build(BuildContext context) => Container(
+        color: _skyColor(),
+        child: Stack(
+          children: [
+            Cloudy(theme,time,true),
+            Rainy(theme,time,true),
+          ],
+        ),
+      );
 
-  bool _shouldFlash() => time.second % 2 == 1 && time.millisecond < 100;
+  static final _bolt  = Color.fromARGB(0xCC, 255, 255, 255);
+  static final _clear = Color.fromARGB(0x00, 255, 255, 255);
 
-  void _paintFlash() {
-    _canvas.drawRect(_all(), _paint(gray(255)));
-  }
+  Color _skyColor() => _flash() ? _bolt : _clear;
 
-  Rect _all() => Rect.fromLTRB(0, 0, _size.width, _size.height);
+  bool _flash() => time.second % 2 == 1 && time.millisecond < 100;
 
-  void _paintLightning() {
-  }
-
-  Color gray(int value) => Color.fromARGB(0xCC, value, value, value);
-
-  Paint _paint(Color color) => Paint()
-    ..color = color;
-
-  @override
-  bool shouldRepaint(ThunderstormPainter old) => true;
 
 }
