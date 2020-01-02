@@ -23,11 +23,15 @@ class SunPainter extends CustomPainter {
   Paint _paint() => Paint()
     ..color = _color();
 
-  Color _color() => _tween(Colors.red,Colors.yellow);
+  Color _color() => _aroundNoon()
+      ? _tween(Colors.white,Colors.yellow, _noonDistance())
+      : _tween(Colors.yellow,Colors.red,   _noonDistance() - 1.0);
 
-  Color _tween(Color a, Color b) =>
-      Color.fromARGB(255,_mix(a.red,b.red),_mix(a.green,b.green),_mix(a.blue,b.blue));
-  int _mix(int a, int b) => (a * _y() + b * (1.0 - _y())).toInt();
+  bool _aroundNoon() => _noonDistance() <= 1.0;
+  Color _tween(Color a, Color b, double f) =>
+      Color.fromARGB(255,_mix(a.red,b.red,f),_mix(a.green,b.green,f),_mix(a.blue,b.blue,f));
+
+  int _mix(int a, int b, double f) => (b * f + a * (1.0 - f)).toInt();
 
   Offset _center(Size size) => Offset(_x() * size.width,_y() * size.height);
 
@@ -39,6 +43,8 @@ class SunPainter extends CustomPainter {
   double dawn = 0.25;
   double _fractionOfDaytime() => (_fractionOfDay() - dawn ) * 2.0;
   double _fractionOfDay() => (time.hour * 60 + time.minute) / (24 * 60);
+  double _noonDistance() => _timeDistance(0.5);
+  double _timeDistance(double t) => (_fractionOfDay() - t).abs() * 8.0;
 
   @override
   bool shouldRepaint(SunPainter old) => true;
