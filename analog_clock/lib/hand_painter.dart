@@ -99,7 +99,7 @@ class HandPainter extends CustomPainter {
     painter.paint(canvas, at);
   }
 
-  double   _fontSize()                    => 20 + 5 * _angleRadians(time);
+  double   _fontSize()                    => 20 + 8 * _angleRadians(time);
   TextSpan _textSpan(TextStyle textStyle) => TextSpan(text: _text(), style: textStyle,);
 
   TextPainter _textPainter(TextStyle textStyle) =>
