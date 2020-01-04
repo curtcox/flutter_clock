@@ -99,26 +99,22 @@ class HandPainter extends CustomPainter {
     painter.paint(canvas, at);
   }
 
-  TextPainter _textForegroundPainter() {
-    final fontSize = 20 + 5 * _angleRadians(time);
-    final textStyle = TextStyle(
-      color:Colors.white,
-      fontSize: fontSize,);
-    final textSpan = TextSpan(text: _text(), style: textStyle,);
-    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
-  }
+  double   _fontSize()                    => 20 + 5 * _angleRadians(time);
+  TextSpan _textSpan(TextStyle textStyle) => TextSpan(text: _text(), style: textStyle,);
 
-  TextPainter _textBackgroundPainter() {
-    final fontSize = 20 + 5 * _angleRadians(time);
-    final textStyle = TextStyle(
+  TextPainter _textPainter(TextStyle textStyle) =>
+    TextPainter(text: _textSpan(textStyle), textDirection: TextDirection.ltr,);
+
+  TextPainter _textForegroundPainter() =>
+      _textPainter(TextStyle(color:Colors.white, fontSize: _fontSize(),));
+
+  TextPainter _textBackgroundPainter() =>
+      _textPainter(TextStyle(
       foreground: Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2
         ..color = Colors.black,
-      fontSize: fontSize,);
-    final textSpan = TextSpan(text: _text(), style: textStyle,);
-    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
-  }
+      fontSize: _fontSize(),));
 
   @override
   bool shouldRepaint(HandPainter old) => true;
