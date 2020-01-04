@@ -113,7 +113,7 @@ class _AnalogClockState extends State<AnalogClock> {
   _sun(ThemeData t,BuildContext c) => Sun(t,_now,_skyColor(c));
 
   Color _darkThemeSky = Color(0xFF000000);
-  Color _sunnySky     = Color(0xFF0099FF);
+  Color _sunnySky     = Color(0xFFA8DDFF);
   Color _stormySky    = Color(0xFF88AACC);
   bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
   bool _is(String condition)  => _condition.toLowerCase() == condition;
