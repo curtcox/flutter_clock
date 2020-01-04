@@ -101,7 +101,7 @@ class _AnalogClockState extends State<AnalogClock> {
   _secondHand(ThemeData t) =>
       DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _is('windy'));
   _sun(ThemeData t)          => Sun(t,_now);
-  _cloudy(ThemeData t)       => Cloudy(t,_now,_is('cloudy'));
+  _cloudy(ThemeData t)       => Cloudy(t,_now,0,_is('cloudy'));
   _foggy(ThemeData t)        => Foggy(t,_now,_is('foggy'));
   _rainy(ThemeData t)        => Rainy(t,_now,_is('rainy'));
   _snowy(ThemeData t)        => Snowy(t,_now,_is('snowy'));

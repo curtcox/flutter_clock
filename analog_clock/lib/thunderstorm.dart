@@ -17,7 +17,7 @@ class Thunderstorm extends StatelessWidget {
         color: _skyColor(),
         child: Stack(
           children: [
-            Cloudy(theme,time,true),
+            Cloudy(theme,time,80,true),
             Rainy(theme,time,true),
           ],
         ),
