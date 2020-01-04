@@ -100,7 +100,6 @@ class _AnalogClockState extends State<AnalogClock> {
       DrawnHand(MinuteHand(t),_now, Duration(minutes: 1), _is('windy'));
   _secondHand(ThemeData t) =>
       DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _is('windy'));
-  _sun(ThemeData t)          => Sun(t,_now);
   _cloudy(ThemeData t)       => Cloudy(t,_now,0,_is('cloudy'));
   _foggy(ThemeData t)        => Foggy(t,_now,_is('foggy'));
   _rainy(ThemeData t)        => Rainy(t,_now,_is('rainy'));
@@ -111,9 +110,10 @@ class _AnalogClockState extends State<AnalogClock> {
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
   }
   bool _isStorming() => _is('rainy') || _is('thunderstorm');
+  _sun(ThemeData t,BuildContext c) => Sun(t,_now,_skyColor(c));
 
   Color _darkThemeSky = Color(0xFF000000);
-  Color _sunnySky     = Color(0xFFA8DDFF);
+  Color _sunnySky     = Color(0xFF0099FF);
   Color _stormySky    = Color(0xFF88AACC);
   bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
   bool _is(String condition)  => _condition.toLowerCase() == condition;
@@ -138,7 +138,7 @@ class _AnalogClockState extends State<AnalogClock> {
         color: _skyColor(context),
         child: Stack(
           children: [
-            _sun(theme),
+            _sun(theme,context),
             _cloudy(theme),
             _foggy(theme),
             _thunderstorm(theme),
