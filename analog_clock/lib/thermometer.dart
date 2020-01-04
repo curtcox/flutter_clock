@@ -1,3 +1,4 @@
+import 'package:analog_clock/outlined_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clock_helper/model.dart';
 
@@ -36,6 +37,7 @@ class ThermometerPainter extends CustomPainter {
   double _w;
   double _h;
   Canvas _canvas;
+  Size _size;
 
   ThermometerPainter(this.unit,this.current,this.low,this.high);
 
@@ -43,6 +45,7 @@ class ThermometerPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
       _w      = size.width;
       _h      = size.height;
+      _size   = size;
       _canvas = canvas;
       _bulb(7.5,_black());
       _tube(_edge(),    _black());
@@ -101,8 +104,7 @@ class ThermometerPainter extends CustomPainter {
   void _paintMarkText(double temp, double fontSize) {
     String text = _withUnit(temp);
     Offset position = Offset(_w - 50,_cy(temp));
-    _paintTextWithPainter(position, _textBackgroundPainter(text,fontSize));
-    _paintTextWithPainter(position, _textForegroundPainter(text,fontSize));
+    OutlinedText.paintText(_canvas, _size, position, text, fontSize);
   }
 
   /// Temperature unit of measurement with degrees.
@@ -114,31 +116,6 @@ class ThermometerPainter extends CustomPainter {
       default:
         return temp.toStringAsFixed(1) + '°C';
     }
-  }
-
-  void _paintTextWithPainter(Offset position, TextPainter painter) {
-    painter.layout(minWidth: 0, maxWidth: _w,);
-    final at = position.translate(painter.width / -2, painter.height / -2);
-    painter.paint(_canvas, at);
-  }
-
-  TextPainter _textForegroundPainter(String text, double fontSize) {
-    final textStyle = TextStyle(
-      color:Colors.white,
-      fontSize: fontSize,);
-    final textSpan = TextSpan(text: text, style: textStyle,);
-    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
-  }
-
-  TextPainter _textBackgroundPainter(String text, double fontSize) {
-    final textStyle = TextStyle(
-      foreground: Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..color = Colors.black,
-      fontSize: fontSize,);
-    final textSpan = TextSpan(text: text, style: textStyle,);
-    return TextPainter(text: textSpan, textDirection: TextDirection.ltr,);
   }
 
   @override

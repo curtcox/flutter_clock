@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
+import 'outlined_text.dart';
+
 /// [CustomPainter] that draws a clock hand.
 class HandPainter extends CustomPainter {
 
@@ -89,32 +91,10 @@ class HandPainter extends CustomPainter {
       ? math.sin(x * 0.1 + _shift() * 5.9) * delta * 1.7 : 0.0;
 
   void _paintText(Canvas canvas, Size size, Offset position) {
-    _paintTextWithPainter(canvas, size, position, _textBackgroundPainter());
-    _paintTextWithPainter(canvas, size, position, _textForegroundPainter());
+    OutlinedText.paintText(canvas,size,position,_text(),_fontSize());
   }
 
-  void _paintTextWithPainter(Canvas canvas, Size size, Offset position, TextPainter painter) {
-    painter.layout(minWidth: 0, maxWidth: size.width,);
-    final at = position.translate(painter.width / -2, painter.height / -2);
-    painter.paint(canvas, at);
-  }
-
-  double   _fontSize()                    => 20 + 8 * _angleRadians(time);
-  TextSpan _textSpan(TextStyle textStyle) => TextSpan(text: _text(), style: textStyle,);
-
-  TextPainter _textPainter(TextStyle textStyle) =>
-    TextPainter(text: _textSpan(textStyle), textDirection: TextDirection.ltr,);
-
-  TextPainter _textForegroundPainter() =>
-      _textPainter(TextStyle(color:Colors.white, fontSize: _fontSize(),));
-
-  TextPainter _textBackgroundPainter() =>
-      _textPainter(TextStyle(
-      foreground: Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..color = Colors.black,
-      fontSize: _fontSize(),));
+  double _fontSize() => 20 + 8 * _angleRadians(time);
 
   @override
   bool shouldRepaint(HandPainter old) => true;
