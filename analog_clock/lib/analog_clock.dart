@@ -10,6 +10,7 @@ import 'package:analog_clock/snowy.dart';
 import 'package:analog_clock/sun.dart';
 import 'package:analog_clock/thermometer.dart';
 import 'package:analog_clock/thunderstorm.dart';
+import 'package:analog_clock/weather_inset.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -80,19 +81,8 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-  DefaultTextStyle _weatherInfo(BuildContext context,ThemeData customTheme) => DefaultTextStyle(
-    style: TextStyle(color: _foregroundColor(context)),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_temperature),
-        Text(_temperatureRange),
-        Text(_condition),
-        Text(_location),
-      ],
-    ),
-  );
-
+  Positioned _weatherInset(BuildContext context) =>
+    WeatherInset(_temperature,_temperatureRange,_condition,_location,_foregroundColor(context)).positioned();
 
   _hourHand(ThemeData t)   =>
       DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12), _is('windy'));
@@ -148,19 +138,11 @@ class _AnalogClockState extends State<AnalogClock> {
             _minuteHand(theme),
             _hourHand(theme),
             _thermometer(theme),
-            _weatherInset(context, theme)
+            _weatherInset(context)
           ],
         ),
       ),
     );
   }
 
-  Positioned _weatherInset(BuildContext context,ThemeData theme) => Positioned(
-        left: 0,
-        bottom: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: _weatherInfo(context,theme),
-        ),
-      );
 }
