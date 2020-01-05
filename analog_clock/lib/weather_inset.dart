@@ -1,21 +1,4 @@
-import 'dart:async';
-
-import 'package:analog_clock/cloudy.dart';
-import 'package:analog_clock/drawn_hand.dart';
-import 'package:analog_clock/hour_hand.dart';
-import 'package:analog_clock/rainy.dart';
-import 'package:analog_clock/second_hand.dart';
-import 'package:analog_clock/minute_hand.dart';
-import 'package:analog_clock/snowy.dart';
-import 'package:analog_clock/sun.dart';
-import 'package:analog_clock/thermometer.dart';
-import 'package:analog_clock/thunderstorm.dart';
-import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
-import 'package:intl/intl.dart';
-
-import 'foggy.dart';
 
 class WeatherInset {
 
