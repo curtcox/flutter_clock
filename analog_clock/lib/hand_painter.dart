@@ -25,11 +25,13 @@ class HandPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final position = _position(size,time);
+    final length = _length(size);
+    final inside = _position(size,time,length);
+    final outside = _position(size,time,length + 1);
     final center = _center(size);
-    _paintTail(canvas, size, position);
-    _paintHand(canvas, center, position);
-    _paintText(canvas, size, position);
+    _paintTail(canvas, size, inside);
+    _paintHand(canvas, center, inside,outside);
+    _paintText(canvas, size, inside);
   }
 
   Offset _center(Size size) => (Offset.zero & size).center;
@@ -38,8 +40,8 @@ class HandPainter extends CustomPainter {
   double _angle(DateTime t) => _angleRadians(t) - math.pi / 2.0;
   double _length(Size size) => size.shortestSide * 0.5 * _handSize();
 
-  Offset _position(Size size, DateTime t) =>
-    _center(size) + Offset(_x(t), _y(t)) * _length(size);
+  Offset _position(Size size, DateTime t, length) =>
+    _center(size) + Offset(_x(t), _y(t)) * length;
 
   Paint _handPaint() => _paint(_color());
   Paint _black() => _paint(Colors.black);
@@ -53,32 +55,33 @@ class HandPainter extends CustomPainter {
     ..color       = _color().withAlpha(alpha)
     ..strokeWidth = 1;
 
-  void _paintHand(Canvas canvas, Offset center, Offset position) {
+  void _paintHand(Canvas canvas, Offset center, Offset inside, Offset outside) {
     final hand = _handPaint();
     final black = _black();
     final white = _white();
     final delta = _lineWidth() / 2;
 
-    canvas.drawLine(Offset(center.dx - 1,center.dy + delta), position, black);
-    canvas.drawLine(Offset(center.dx + 1,center.dy - delta), position, black);
-    canvas.drawLine(Offset(center.dx - delta - 1,center.dy + delta), position, white);
-    canvas.drawLine(Offset(center.dx + delta + 1,center.dy - delta), position, white);
-    canvas.drawLine(center, position, hand);
-    canvas.drawLine(Offset(center.dx - delta,center.dy + delta), position, hand);
-    canvas.drawLine(Offset(center.dx + delta,center.dy - delta), position, hand);
+    canvas.drawLine(Offset(center.dx - 1,center.dy + delta), inside, black);
+    canvas.drawLine(Offset(center.dx + 1,center.dy - delta), inside, black);
+    canvas.drawLine(Offset(center.dx - delta - 1,center.dy + delta), outside, white);
+    canvas.drawLine(Offset(center.dx + delta + 1,center.dy - delta), outside, white);
+    canvas.drawLine(center, inside, hand);
+    canvas.drawLine(Offset(center.dx - delta,center.dy + delta), outside, hand);
+    canvas.drawLine(Offset(center.dx + delta,center.dy - delta), outside, hand);
   }
 
   void _paintTail(Canvas canvas, Size size, Offset position) {
     double alpha = 255;
     DateTime t = time;
-    double x = _position(size,t).dx;
+    final length = _length(size);
+    double x = _position(size,t,length).dx;
     double delta = 1;
 
     while (x > 0) {
       x = x - 1;
       delta = delta * 1.011;
       t = t.subtract(duration * 0.09);
-      final y      = _position(size,t).dy + _wind(x,delta);
+      final y      = _position(size,t,length).dy + _wind(x,delta);
       final top    = Offset(x,y - delta);
       final bottom = Offset(x,y + delta);
       alpha = alpha * 0.995;
