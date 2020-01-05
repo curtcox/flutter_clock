@@ -10,6 +10,7 @@ import 'package:analog_clock/snowy.dart';
 import 'package:analog_clock/sun.dart';
 import 'package:analog_clock/thermometer.dart';
 import 'package:analog_clock/thunderstorm.dart';
+import 'package:analog_clock/time.dart';
 import 'package:analog_clock/weather_inset.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class AnalogClock extends StatefulWidget {
 }
 
 class _AnalogClockState extends State<AnalogClock> {
-  var _now = DateTime.now();
+  var _now = Time.now();
   var _temperature = '';
   var _temperatureRange = '';
   var _condition = '';
@@ -73,7 +74,7 @@ class _AnalogClockState extends State<AnalogClock> {
 
   void _updateTime() {
     setState(() {
-      _now = DateTime.now();
+      _now = Time.now();
       _timer = Timer(
         Duration(milliseconds: 100) - Duration(milliseconds: _now.millisecond),
         _updateTime,
