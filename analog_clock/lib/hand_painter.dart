@@ -27,7 +27,7 @@ class HandPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final length = _length(size);
     final inside = _position(size,time,length);
-    final outside = _position(size,time,length + 1);
+    final outside = _position(size,time,length * 1.03);
     final center = _center(size);
     _paintTail(canvas, size, inside);
     _paintHand(canvas, center, inside,outside);
@@ -61,13 +61,13 @@ class HandPainter extends CustomPainter {
     final white = _white();
     final delta = _lineWidth() / 2;
 
+    canvas.drawLine(center, inside, hand);
+    canvas.drawLine(Offset(center.dx - delta,center.dy + delta), inside, hand);
+    canvas.drawLine(Offset(center.dx + delta,center.dy - delta), inside, hand);
     canvas.drawLine(Offset(center.dx - 1,center.dy + delta), inside, black);
     canvas.drawLine(Offset(center.dx + 1,center.dy - delta), inside, black);
-    canvas.drawLine(Offset(center.dx - delta - 1,center.dy + delta), outside, white);
-    canvas.drawLine(Offset(center.dx + delta + 1,center.dy - delta), outside, white);
-    canvas.drawLine(center, inside, hand);
-    canvas.drawLine(Offset(center.dx - delta,center.dy + delta), outside, hand);
-    canvas.drawLine(Offset(center.dx + delta,center.dy - delta), outside, hand);
+    canvas.drawLine(Offset(center.dx - delta - 3,center.dy + delta), outside, white);
+    canvas.drawLine(Offset(center.dx + delta + 3,center.dy - delta), outside, white);
   }
 
   void _paintTail(Canvas canvas, Size size, Offset position) {
