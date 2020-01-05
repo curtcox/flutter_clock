@@ -20,17 +20,26 @@ class SunPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    _paintSky(canvas,size);
     _paintSun(canvas, _rect(size), _alignment(size));
   }
 
+  void _paintSky(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = _sky;
+    final x = 122.0;
+    final rect = Rect.fromLTRB(-x, -x, size.width + x, size.height + x);
+    canvas.drawRect(rect, paint);
+  }
+
   void _paintSun(Canvas canvas, Rect rect, Alignment alignment) {
-    var gradient = RadialGradient(
+    final gradient = RadialGradient(
       center: alignment,
       radius: 0.4,
       colors: [ _color(), _sky],
       stops: [0.6, 1.0],
     );
-    var paint = Paint()
+    final paint = Paint()
       ..shader = gradient.createShader(rect);
     canvas.drawRect(rect, paint);
   }

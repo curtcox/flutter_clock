@@ -29,8 +29,8 @@ class HandPainter extends CustomPainter {
     final inside = _position(size,time,length);
     final outside = _position(size,time,length * 1.03);
     final center = _center(size);
-    _paintTail(canvas, size, inside);
-    _paintHand(canvas, center, inside,outside);
+    _paintTail(canvas, size, outside, length);
+    _paintHand(canvas, center, inside, outside);
     _paintText(canvas, size, inside);
   }
 
@@ -43,7 +43,7 @@ class HandPainter extends CustomPainter {
   Offset _position(Size size, DateTime t, length) =>
     _center(size) + Offset(_x(t), _y(t)) * length;
 
-  Paint _handPaint() => _paint(_color());
+  Paint _hand()  => _paint(_color());
   Paint _black() => _paint(Colors.black);
   Paint _white() => _paint(Colors.white);
 
@@ -56,7 +56,7 @@ class HandPainter extends CustomPainter {
     ..strokeWidth = 1;
 
   void _paintHand(Canvas canvas, Offset center, Offset inside, Offset outside) {
-    final hand = _handPaint();
+    final hand  = _hand();
     final black = _black();
     final white = _white();
     final delta = _lineWidth() / 2;
@@ -70,14 +70,13 @@ class HandPainter extends CustomPainter {
     canvas.drawLine(Offset(center.dx + delta + 3,center.dy - delta), outside, white);
   }
 
-  void _paintTail(Canvas canvas, Size size, Offset position) {
+  void _paintTail(Canvas canvas, Size size, Offset position, double length) {
     double alpha = 255;
     DateTime t = time;
-    final length = _length(size);
     double x = _position(size,t,length).dx;
     double delta = 1;
 
-    while (x > 0) {
+    while (x > -122) {
       x = x - 1;
       delta = delta * 1.011;
       t = t.subtract(duration * 0.09);
