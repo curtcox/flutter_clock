@@ -27,17 +27,18 @@ class SunPainter extends CustomPainter {
   void _paintSky(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = _sky;
-    final x = 122.0;
-    final rect = Rect.fromLTRB(-x, -x, size.width + x, size.height + x);
-    canvas.drawRect(rect, paint);
+    canvas.drawRect(_rect(size), paint);
   }
+
+  final x = 122.0;
+  Rect _rect(Size size) => Rect.fromLTRB(-x, -x, size.width + x, size.height + x);
 
   void _paintSun(Canvas canvas, Rect rect, Alignment alignment) {
     final gradient = RadialGradient(
       center: alignment,
-      radius: 0.4,
+      radius: 0.33,
       colors: [ _color(), _sky],
-      stops: [0.6, 1.0],
+      stops: [0.65, 1.0],
     );
     final paint = Paint()
       ..shader = gradient.createShader(rect);
@@ -55,7 +56,6 @@ class SunPainter extends CustomPainter {
   int _mix(int a, int b, double f) => (b * f + a * (1.0 - f)).toInt();
 
   Alignment _alignment(Size size) => Alignment(_x(),_y());
-  Rect           _rect(Size size) => Rect.fromLTRB(0, 0, size.width, size.height);
 
   double _x() => 1.0 - _fractionOfDaytime() * 2.0;
   double _y() => 1.0 - math.sin(_fractionOfDaytime() * math.pi) * 2.0;
