@@ -4,11 +4,11 @@ class Time {
     static DateTime now() => _normal ? _t() : _fast();
     static DateTime _t() => DateTime.now();
     static DateTime _fast() {
-       int millisPerSecond = 10;
+       int millisPerSecond = 1;
        int millisPerMinute = millisPerSecond * 60;
-       int millisPerHour = millisPerMinute * 60;
+       int millisPerHour   = millisPerMinute * 60;
        final t = _t();
-       int x = t.second * 1000 + t.millisecond;
+       int x = t.minute * 1000 * 60 + t.second * 1000 + t.millisecond;
        int year = 2020;
        int month = 1;
        int day = 1;
