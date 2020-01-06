@@ -25,7 +25,8 @@ class DropPainter extends CustomPainter {
       for (int i=1; i<max; i++) {
         double distance = i / max;
         double x = (i + i * i) % max / max;
-        _drop(x,10 + distance * 40);
+        double scaled = x * 1.36 - 0.18;
+        _drop(scaled,10 + distance * 40);
       }
   }
 
