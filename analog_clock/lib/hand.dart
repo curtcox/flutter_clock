@@ -13,8 +13,7 @@ abstract class Hand extends StatelessWidget {
   /// Create a const clock [Hand].
   ///
   /// All of the parameters are required and must not be null.
-  const Hand(
-    @required this.handFunction, @required this.time, @required this.duration, @required this.windy
+  const Hand(this.handFunction, this.time, this.duration, this.windy
   )  : assert(handFunction != null), assert(time!=null), assert(duration!=null);
 
   /// How to make a hand

@@ -4,11 +4,11 @@ import 'package:flutter_clock_helper/model.dart';
 
 class Thermometer extends StatelessWidget {
 
-  ThemeData theme;
-  num current;
-  num low;
-  num high;
-  TemperatureUnit unit;
+  final ThemeData theme;
+  final num current;
+  final num low;
+  final num high;
+  final TemperatureUnit unit;
 
   Thermometer(this.theme,this.unit,this.current,this.low,this.high);
 

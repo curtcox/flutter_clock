@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// A sun that is drawn with [CustomPainter]
 class Sun extends ConditionalPainter {
 
-  Color _sky;
+  final Color _sky;
 
   Sun(theme,time,this._sky) : super(theme,time,true);
   painter() => SunPainter(time,_sky);

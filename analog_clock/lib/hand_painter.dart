@@ -13,7 +13,7 @@ class HandPainter extends CustomPainter {
   final Duration duration;
   final bool windy;
 
-  HandPainter(@required this.handFunction, @required this.time, @required this.duration, @required this.windy)
+  HandPainter(this.handFunction,this.time,this.duration,this.windy)
       : assert(handFunction != null), assert(time != null), assert(duration != null) ;
 
   double  _handSize() => handFunction.size(time);

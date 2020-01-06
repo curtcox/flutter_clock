@@ -14,9 +14,7 @@ import 'hand_painter.dart';
 class DrawnHand extends Hand {
   /// Create a const clock [Hand].
   ///
-  const DrawnHand(
-    @required HandFunction handFunction, @required DateTime time,
-      @required Duration duration, @required bool windy,
+  const DrawnHand(HandFunction handFunction, DateTime time, Duration duration, bool windy,
   )  : assert(handFunction != null), assert(time!=null), assert(duration!=null),
         super(handFunction,time,duration,windy);
 
