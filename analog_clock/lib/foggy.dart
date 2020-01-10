@@ -6,20 +6,20 @@ import 'ConditionalPainter.dart';
 class Foggy extends ConditionalPainter {
 
   Foggy(theme,time,enabled) : super(theme,time,enabled);
-  painter() => FoggyPainter(time);
+  painter() => FoggyPainter(time,Duration(seconds: 100));
 
 }
 
-class FoggyPainter extends CustomPainter {
+class FoggyPainter extends TimedCustomPainter {
 
   DateTime time;
   Canvas _canvas;
   Size _size;
 
-  FoggyPainter(this.time);
+  FoggyPainter(this.time,rate) : super(rate);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void custom(Canvas canvas, Size size) {
       _canvas = canvas;
       _size = size;
       _paintFog();
@@ -51,8 +51,5 @@ class FoggyPainter extends CustomPainter {
   double _radius(double r) => (r * _size.height) / 5;
 
   double _x(double speed, double offset) => TimeCycle.at(time,speed,offset,1.8,0.4);
-
-  @override
-  bool shouldRepaint(FoggyPainter old) => true;
 
 }

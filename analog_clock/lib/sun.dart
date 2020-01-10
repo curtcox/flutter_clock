@@ -7,19 +7,19 @@ class Sun extends ConditionalPainter {
   final Color _sky;
 
   Sun(theme,time,this._sky) : super(theme,time,true);
-  painter() => SunPainter(time,_sky);
+  painter() => SunPainter(time,_sky, Duration(seconds: 100));
 
 }
 
-class SunPainter extends CustomPainter {
+class SunPainter extends TimedCustomPainter {
 
   DateTime _time;
   Color _sky;
 
-  SunPainter(this._time,this._sky);
+  SunPainter(this._time,this._sky,rate) : super(rate);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void custom(Canvas canvas, Size size) {
     _paintSky(canvas,size);
     _paintSun(canvas, _rect(size), _alignment(size));
   }
@@ -65,8 +65,5 @@ class SunPainter extends CustomPainter {
   double _fractionOfDay() => (_time.hour * 60 + _time.minute) / (24 * 60);
   double _noonDistance() => _timeDistance(0.5);
   double _timeDistance(double t) => (_fractionOfDay() - t).abs() * 8.0;
-
-  @override
-  bool shouldRepaint(SunPainter old) => true;
 
 }

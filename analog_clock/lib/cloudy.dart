@@ -7,21 +7,21 @@ class Cloudy extends ConditionalPainter {
   final int _darkness;
 
   Cloudy(theme,time,this._darkness,enabled) : super(theme,time,enabled);
-  painter() => CloudyPainter(time,_darkness);
+  painter() => CloudyPainter(time,_darkness,Duration(seconds: 1));
 
 }
 
-class CloudyPainter extends CustomPainter {
+class CloudyPainter extends TimedCustomPainter {
 
   DateTime _time;
   Canvas _canvas;
   Size _size;
   int _darkness;
 
-  CloudyPainter(this._time,this._darkness);
+  CloudyPainter(this._time,this._darkness,rate) : super(rate);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void custom(Canvas canvas, Size size) {
       _canvas = canvas;
       _size = size;
       _paintClouds();
@@ -81,8 +81,5 @@ class CloudyPainter extends CustomPainter {
   double _radius(double r) => (r * _size.height) / 5;
 
   double _x(double speed) => TimeCycle.at(_time,speed,0.0,1.4,0.2);
-
-  @override
-  bool shouldRepaint(CloudyPainter old) => true;
 
 }

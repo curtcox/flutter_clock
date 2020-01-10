@@ -1,7 +1,9 @@
 import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
 
-class DropPainter extends CustomPainter {
+import 'ConditionalPainter.dart';
+
+class DropPainter extends TimedCustomPainter {
 
   final DateTime time;
   final Color color;
@@ -11,10 +13,10 @@ class DropPainter extends CustomPainter {
   Canvas _canvas;
   Size _size;
 
-  DropPainter(this.time,this.speed,this.aspectRatio,this.color);
+  DropPainter(this.time,this.speed,this.aspectRatio,this.color,rate) : super(rate);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void custom(Canvas canvas, Size size) {
       _canvas = canvas;
       _size = size;
       _paintDrops();
@@ -48,8 +50,5 @@ class DropPainter extends CustomPainter {
   double _radius(double r) => (r * _size.height) / 5;
 
   double _y(double speed) => TimeCycle.at(time,speed,0.0,1.1,0.05);
-
-  @override
-  bool shouldRepaint(DropPainter old) => true;
 
 }
