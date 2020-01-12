@@ -110,16 +110,9 @@ class _AnalogClockState extends State<AnalogClock> {
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
   }
   bool _isStorming() => _is('rainy') || _is('thunderstorm');
-  _sun(ThemeData t,BuildContext c) => Sun(t,_now,_skyColor(c));
-
-  Color _darkThemeSky = Color(0xFF000000);
-  Color _sunnySky     = Color(0xFFA8DDFF);
-  Color _stormySky    = Color(0xFF88AACC);
+  _sun(ThemeData t,BuildContext c) => Sun(t,_now,_isStorming(),_lightTheme(context));
   bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
   bool _is(String condition)  => _condition.toLowerCase() == condition;
-  Color _skyColor(BuildContext context) => _lightTheme(context)
-          ? _lightThemeSky() : _darkThemeSky;
-  Color _lightThemeSky() => _isStorming() ? _stormySky : _sunnySky;
 
   Color _foregroundColor(BuildContext context) => _lightTheme(context)
           ? Color(0xFF000000) : Color(0xFFffffff);
@@ -135,7 +128,6 @@ class _AnalogClockState extends State<AnalogClock> {
         value: time,
       ),
       child: Container(
-        color: _skyColor(context),
         child: Stack(
           children: [
             _sun(theme,context),
