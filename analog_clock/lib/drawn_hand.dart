@@ -14,12 +14,12 @@ import 'hand_painter.dart';
 class DrawnHand extends Hand {
   /// Create a const clock [Hand].
   ///
-  const DrawnHand(HandFunction handFunction, DateTime time, Duration duration, bool windy,
-  )  : assert(handFunction != null), assert(time!=null), assert(duration!=null),
-        super(handFunction,time,duration,windy);
+  const DrawnHand(HandFunction handFunction, DateTime time, Duration duration, HandPart handPart)
+      : assert(handFunction != null), assert(time!=null), assert(duration!=null),
+        super(handFunction,time,duration,handPart);
 
 
-  HandPainter _handPainter() => HandPainter(handFunction,time,duration,windy);
+  HandPainter _handPainter() => HandPainter(handFunction,time,duration,handPart);
 
   @override
   Widget build(BuildContext context) {
@@ -31,4 +31,11 @@ class DrawnHand extends Hand {
       ),
     );
   }
+}
+
+enum HandPart {
+  tail,
+  windyTail,
+  hand,
+  text
 }

@@ -3,17 +3,18 @@ import 'dart:math' as math;
 import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
+import 'drawn_hand.dart';
 import 'outlined_text.dart';
 
-/// [CustomPainter] that draws a clock hand.
+/// [CustomPainter] that draws part of a clock hand.
 class HandPainter extends CustomPainter {
 
   final HandFunction handFunction;
   final DateTime time;
   final Duration duration;
-  final bool windy;
+  final HandPart part;
 
-  HandPainter(this.handFunction,this.time,this.duration,this.windy)
+  HandPainter(this.handFunction,this.time,this.duration,this.part)
       : assert(handFunction != null), assert(time != null), assert(duration != null) ;
 
   double  _handSize() => handFunction.size(time);
@@ -29,9 +30,10 @@ class HandPainter extends CustomPainter {
     final inside = _position(size,time,length);
     final outside = _position(size,time,length * 1.03);
     final center = _center(size);
-    _paintTail(canvas, size, outside, length);
-    _paintHand(canvas, center, inside, outside);
-    _paintText(canvas, size, inside);
+    if (part==HandPart.hand)      { _paintHand(canvas, center, inside, outside); }
+    if (part==HandPart.text)      { _paintText(canvas, size, inside); }
+    if (part==HandPart.tail)      { _paintTail(canvas, size, outside, length,false); }
+    if (part==HandPart.windyTail) { _paintTail(canvas, size, outside, length,true); }
   }
 
   Offset _center(Size size) => (Offset.zero & size).center;
@@ -70,7 +72,7 @@ class HandPainter extends CustomPainter {
     canvas.drawLine(Offset(center.dx + delta + 3,center.dy - delta), outside, white);
   }
 
-  void _paintTail(Canvas canvas, Size size, Offset position, double length) {
+  void _paintTail(Canvas canvas, Size size, Offset position, double length,bool windy) {
     double alpha = 255;
     DateTime t = time;
     double x = _position(size,t,length).dx;
@@ -80,7 +82,8 @@ class HandPainter extends CustomPainter {
       x = x - 1;
       delta = delta * 1.011;
       t = t.subtract(duration * 0.09);
-      final y      = _position(size,t,length).dy + _wind(x,delta);
+      final wind   = windy ? _wind(x,delta) : 0.0;
+      final y      = _position(size,t,length).dy + wind;
       final top    = Offset(x,y - delta);
       final bottom = Offset(x,y + delta);
       alpha = alpha * 0.995;
@@ -99,8 +102,8 @@ class HandPainter extends CustomPainter {
              now.millisecond / 1000;
   }
 
-  double _wind(double x, double delta) => windy
-      ? math.sin(x * 0.1 + _shift() * 5.9) * delta * 1.7 : 0.0;
+  double _wind(double x, double delta) =>
+      math.sin(x * 0.1 + _shift() * 5.9) * delta * 1.7;
 
   void _paintText(Canvas canvas, Size size, Offset position) {
     OutlinedText.paintText(canvas,size,position,_text(),_fontSize());

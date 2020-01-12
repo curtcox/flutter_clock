@@ -85,12 +85,21 @@ class _AnalogClockState extends State<AnalogClock> {
   Positioned _weatherInset(BuildContext context) =>
     WeatherInset(_temperature,_temperatureRange,_condition,_location,_foregroundColor(context)).positioned();
 
-  _hourHand(ThemeData t)   =>
-      DrawnHand(HourHand(t,widget.model), _now, Duration(minutes: 12), _is('windy'));
-  _minuteHand(ThemeData t) =>
-      DrawnHand(MinuteHand(t),_now, Duration(minutes: 1), _is('windy'));
-  _secondHand(ThemeData t) =>
-      DrawnHand(SecondHand(t),_now, Duration(seconds: 1), _is('windy'));
+  static const   hour = Duration(minutes: 12);
+  static const minute = Duration(minutes: 1);
+  static const second = Duration(seconds: 1);
+  static const   hand = HandPart.hand;
+  static const   text = HandPart.text;
+  _model() => widget.model;
+  _tail() => _is('windy') ? HandPart.windyTail : HandPart.tail;
+  _hourHand(ThemeData t)   => DrawnHand(HourHand(t,_model()), _now, hour, hand);
+  _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, minute, hand);
+  _secondHand(ThemeData t) => DrawnHand(SecondHand(t),_now, second, hand);
+  _hourTail(ThemeData t)   => DrawnHand(HourHand(t,_model()), _now, hour, _tail());
+  _minuteTail(ThemeData t) => DrawnHand(MinuteHand(t),_now, minute, _tail());
+  _secondTail(ThemeData t) => DrawnHand(SecondHand(t),_now, second, _tail());
+  _hourText(ThemeData t)   => DrawnHand(HourHand(t,_model()), _now, hour, text);
+  _minuteText(ThemeData t) => DrawnHand(MinuteHand(t),_now, minute, text);
   _cloudy(ThemeData t)       => Cloudy(t,_now,0,_is('cloudy'));
   _foggy(ThemeData t)        => Foggy(t,_now,_is('foggy'));
   _rainy(ThemeData t)        => Rainy(t,_now,_is('rainy'));
@@ -135,9 +144,14 @@ class _AnalogClockState extends State<AnalogClock> {
             _thunderstorm(theme),
             _rainy(theme),
             _snowy(theme),
+            _secondTail(theme),
+            _minuteTail(theme),
+            _hourTail(theme),
             _secondHand(theme),
             _minuteHand(theme),
             _hourHand(theme),
+            _minuteText(theme),
+            _hourText(theme),
             _thermometer(theme),
             _weatherInset(context)
           ],

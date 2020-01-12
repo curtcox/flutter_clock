@@ -23,7 +23,6 @@ class SecondHand extends HandFunction {
 
   @override double      size(DateTime t) => 1;
   @override int       number(DateTime t) => t.second;
-  @override String      text(DateTime t) => "";
   @override double thickness(DateTime t) => 5;
 
 }

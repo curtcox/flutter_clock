@@ -5,6 +5,8 @@
 import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
+import 'drawn_hand.dart';
+
 /// A base class for an analog clock hand-drawing widget.
 ///
 /// This only draws one hand of the analog clock.
@@ -13,7 +15,7 @@ abstract class Hand extends StatelessWidget {
   /// Create a const clock [Hand].
   ///
   /// All of the parameters are required and must not be null.
-  const Hand(this.handFunction, this.time, this.duration, this.windy
+  const Hand(this.handFunction, this.time, this.duration, this.handPart
   )  : assert(handFunction != null), assert(time!=null), assert(duration!=null);
 
   /// How to make a hand
@@ -22,9 +24,9 @@ abstract class Hand extends StatelessWidget {
   /// What time is it
   final DateTime time;
 
-  /// How fast this hand moves
+  /// How fast this hand moves 1/60 of a circle
   final Duration duration;
 
-  /// Is it windy right now?
-  final bool windy;
+  /// hand, text, tail, windyTail
+  final HandPart handPart;
 }
