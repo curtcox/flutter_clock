@@ -54,25 +54,29 @@ class SunPainter extends TimedCustomPainter {
     canvas.drawRect(rect, paint);
   }
 
-  static const Color gray       = Color(0xFF888888);
-  static const Color white      = Color(0xFFFFFFFF);
-  static const Color yellow     = Color(0xFFFFF9C4);
-  static const Color sunRed     = Color(0xFFFFAAAA);
-  static const Color coronaRed  = Color(0xFFFF0000);
-  static const Color coronaYellow = Color(0xFFFFEE58);
-  static const Color _darkThemeSky = Color(0xFF000000);
+  static const Color _white        = Color(0xFFFFFFFF);
+  static const Color _yellow       = Color(0xFFFFF9C4);
+  static const Color _sunRed       = Color(0xFFFFAAAA);
+  static const Color _coronaRed    = Color(0xFFFF0000);
+  static const Color _coronaYellow = Color(0xFFFFEE58);
   static const Color _sunnySky     = Color(0xFFA8DDFF);
   static const Color _stormySky    = Color(0xFF88AACC);
   static const Color _night        = Color(0xFF000000);
-  Color _sun()  => _dayTween(white,yellow,sunRed,sunRed);
+
+  static const Color _darkWhite  = Color(0xFF808080);
+  static const Color _darkSky    = Color(0xFF546F80);
+  static const Color _darkRed    = Color(0xFF800000);
+  static const Color _darkYellow = Color(0xFF80772D);
+
+  Color _sun()  => _dayTween(_white,_yellow,_sunRed,_sunRed);
   Color _sky1() => _dayTween(_noonCorona(),_daytimeCorona(),_twilightCorona(),_night);
   Color _sky2() => _dayTween(_baseSkyColor(),_daytimeCorona(),_twilightCorona(),_night);
   Color _sky3() => _dayTween(_baseSkyColor(), _baseSkyColor(), _twilightCorona(), _night);
-  Color _baseSkyColor() => _lightTheme ? _lightThemeSky() : _darkThemeSky;
-  Color _lightThemeSky() => _storm ? _stormySky : _sunnySky;
-  Color _noonCorona() => white;
-  Color _daytimeCorona() => coronaYellow;
-  Color _twilightCorona() => coronaRed;
+  Color _baseSkyColor()   => _lightTheme ? _lightSky() : _darkSky;
+  Color _lightSky()       => _storm ? _stormySky : _sunnySky;
+  Color _noonCorona()     => _lightTheme ? _white : _darkWhite;
+  Color _daytimeCorona()  => _lightTheme ? _coronaYellow : _darkYellow;
+  Color _twilightCorona() => _lightTheme ? _coronaRed : _darkRed;
 
   bool _aroundNoon() => _noonDistance() <= 1.0;
   Color _dayTween(Color noon, Color morning, Color dawn, Color midnight) {
