@@ -96,7 +96,7 @@ class SunPainter extends TimedCustomPainter {
 
   double dawn = 0.25;
   double _fractionOfDaytime() => (_fractionOfDay() - dawn ) * 2.0;
-  double _fractionOfDay() => (_time.hour * 60 + _time.minute) / (24 * 60);
+  double _fractionOfDay() => (_time.hour * 60 * 60 + _time.minute * 60 + _time.second) / (24 * 60 * 60);
   double _noonDistance() => _timeDistance(0.5);
   bool _daylight() => _time.hour >= 6 && _time.hour < 18;
   double _twilightDistance() => _noonDistance() - 1.0;

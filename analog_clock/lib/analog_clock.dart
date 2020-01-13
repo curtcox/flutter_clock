@@ -82,8 +82,9 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-  Positioned _weatherInset(BuildContext context) =>
-    WeatherInset(_temperature,_temperatureRange,_condition,_location,_foregroundColor(context)).positioned();
+  Positioned _weatherInset() =>
+      WeatherInset(_temperature,_temperatureRange,_condition,_location,_now)
+          .positioned();
 
   static const   hour = Duration(minutes: 12);
   static const minute = Duration(minutes: 1);
@@ -145,7 +146,7 @@ class _AnalogClockState extends State<AnalogClock> {
             _minuteText(theme),
             _hourText(theme),
             _thermometer(theme),
-            _weatherInset(context)
+            _weatherInset()
           ],
         ),
       ),
