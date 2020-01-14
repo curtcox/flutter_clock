@@ -86,8 +86,8 @@ class _AnalogClockState extends State<AnalogClock> {
       WeatherInset(_temperature,_temperatureRange,_condition,_location,_timeString(),_now);
 
   String _timeString() => _model().is24HourFormat
-      ? DateFormat('HH:mm:ss').format(_now)
-      : DateFormat('hh"mm:ss').format(_now);
+      ? DateFormat('H:mm:ss').format(_now)
+      : DateFormat('h:mm:ss').format(_now);
 
   static const   hour = Duration(minutes: 12);
   static const minute = Duration(minutes: 1);

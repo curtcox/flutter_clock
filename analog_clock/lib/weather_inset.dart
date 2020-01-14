@@ -44,17 +44,16 @@ class WeatherInsetPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _paintText(_temp, 0);
-    _paintText(_tempRange, 1);
+    _size = size;
+    _canvas = canvas;
+    _paintText(_temp, 1);
     _paintText(_condition, 2);
-    _paintText(_location, 3);
-    _paintText(_timeString, 4);
+    _paintText(_timeString, 3);
   }
 
   void _paintText(String text, double y) {
-    double fontSize = 20.0;
-    Offset position = Offset(0,y * fontSize);
-    OutlinedText.paintText(_canvas, _size, position, text, fontSize);
+    Offset position = Offset(0,y * 22);
+    OutlinedText.paintText(_canvas, _size, position, text, 18);
   }
 
   @override
