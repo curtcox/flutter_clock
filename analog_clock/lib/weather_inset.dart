@@ -1,43 +1,63 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class WeatherInset {
+import 'outlined_text.dart';
 
-  final String _temperature;
-  final String _temperatureRange;
+class WeatherInset extends StatelessWidget {
+
+  final String _temp;
+  final String _tempRange;
   final String _condition;
   final String _location;
+  final String _timeString;
   final DateTime _time;
 
-  WeatherInset(this._temperature, this._temperatureRange, this._condition, this._location, this._time);
+  WeatherInset(this._temp,this._tempRange,this._condition,this._location,this._timeString,this._time);
 
-  DefaultTextStyle _weatherInfo() => DefaultTextStyle(
-    style: TextStyle(color: _color()),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_temperature),
-        Text(_temperatureRange),
-        Text(_condition),
-        Text(_location),
-      ],
-    ),
-  );
+  WeatherInsetPainter _painter() => WeatherInsetPainter(_temp,_tempRange,_condition,_location,_timeString,_time);
 
-  Positioned positioned() => Positioned(
-        left: 0,
-        bottom: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: _weatherInfo(),
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox.expand(
+        child: CustomPaint(
+          painter: _painter(),
         ),
-      );
+      ),
+    );
+  }
 
-  Color _color() => Color.fromARGB(255, _r(), _g(), _b());
+}
 
-  int _r() => (math.sin(_fractionOfDay() * 24 * 3 * 17) * 255).floor();
-  int _g() => (math.sin(_fractionOfDay() * 24 * 5 * 19) * 255).floor();
-  int _b() => (math.sin(_fractionOfDay() * 24 * 7 * 23) * 255).floor();
-  double _fractionOfDay() => (_time.hour * 60 * 60 + _time.minute * 60 + _time.second) / (24 * 60 * 60);
+class WeatherInsetPainter extends CustomPainter {
+  final String _temp;
+  final String _tempRange;
+  final String _condition;
+  final String _location;
+  final String _timeString;
+  final DateTime _time;
+
+  Canvas _canvas;
+  Size _size;
+
+  WeatherInsetPainter(this._temp,this._tempRange,this._condition,this._location,this._timeString,this._time);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    _paintText(_temp, 0);
+    _paintText(_tempRange, 1);
+    _paintText(_condition, 2);
+    _paintText(_location, 3);
+    _paintText(_timeString, 4);
+  }
+
+  void _paintText(String text, double y) {
+    double fontSize = 20.0;
+    Offset position = Offset(0,y * fontSize);
+    OutlinedText.paintText(_canvas, _size, position, text, fontSize);
+  }
+
+  @override
+  bool shouldRepaint(WeatherInsetPainter old) => true;
 
 }

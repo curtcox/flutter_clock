@@ -82,16 +82,19 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-  Positioned _weatherInset() =>
-      WeatherInset(_temperature,_temperatureRange,_condition,_location,_now)
-          .positioned();
+  WeatherInset _weatherInset() =>
+      WeatherInset(_temperature,_temperatureRange,_condition,_location,_timeString(),_now);
+
+  String _timeString() => _model().is24HourFormat
+      ? DateFormat('HH:mm:ss').format(_now)
+      : DateFormat('hh"mm:ss').format(_now);
 
   static const   hour = Duration(minutes: 12);
   static const minute = Duration(minutes: 1);
   static const second = Duration(seconds: 1);
   static const   hand = HandPart.hand;
   static const   text = HandPart.text;
-  _model() => widget.model;
+  ClockModel _model() => widget.model;
   _tail() => _is('windy') ? HandPart.windyTail : HandPart.tail;
   _hourHand(ThemeData t)   => DrawnHand(HourHand(t,_model()), _now, hour, hand);
   _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, minute, hand);
@@ -113,10 +116,7 @@ class _AnalogClockState extends State<AnalogClock> {
   bool _isStorming() => _is('rainy') || _is('thunderstorm');
   _sun(ThemeData t,BuildContext c) => Sun(t,_now,_isStorming(),_lightTheme(context));
   bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
-  bool _is(String condition)  => _condition.toLowerCase() == condition;
-
-  Color _foregroundColor(BuildContext context) => _lightTheme(context)
-          ? Color(0xFF000000) : Color(0xFFffffff);
+  bool _is(String condition) => _condition.toLowerCase() == condition;
 
   @override
   Widget build(BuildContext context) {
