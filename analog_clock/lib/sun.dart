@@ -1,6 +1,8 @@
 import 'dart:math' as math;import 'package:analog_clock/ConditionalPainter.dart';
 import 'package:flutter/material.dart';
 
+import 'mix.dart';
+
 /// Sun and sky that is drawn with [CustomPainter]
 class Sun extends ConditionalPainter {
 
@@ -80,14 +82,12 @@ class SunPainter extends TimedCustomPainter {
 
   bool _aroundNoon() => _noonDistance() <= 1.0;
   Color _dayTween(Color noon, Color morning, Color dawn, Color midnight) {
-      if (_aroundNoon()) { return _tween(noon,morning,_noonDistance()); }
-      if (_daylight())   { return _tween(morning,dawn,_twilightDistance()); }
-      return _tween(midnight,dawn,_midnightDistance());
+      if (_aroundNoon()) { return _mix(noon,morning,_noonDistance()); }
+      if (_daylight())   { return _mix(morning,dawn,_twilightDistance()); }
+      return _mix(midnight,dawn,_midnightDistance());
   }
-  Color _tween(Color a, Color b, double f) =>
-      Color.fromARGB(255,_mix(a.red,b.red,f),_mix(a.green,b.green,f),_mix(a.blue,b.blue,f));
 
-  int _mix(int a, int b, double f) => (b * f + a * (1.0 - f)).toInt();
+  Color _mix(Color a, Color b, double f) => Mix.of(a,b,f);
 
   Alignment _alignment(Size size) => Alignment(_x(),_y());
 

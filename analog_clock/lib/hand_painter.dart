@@ -4,6 +4,7 @@ import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
 import 'drawn_hand.dart';
+import 'mix.dart';
 import 'outlined_text.dart';
 
 /// [CustomPainter] that draws part of a clock hand.
@@ -46,8 +47,9 @@ class HandPainter extends CustomPainter {
     _center(size) + Offset(_x(t), _y(t)) * length;
 
   Paint _hand()  => _paint(_color());
-  Paint _black() => _paint(Colors.black);
-  Paint _white() => _paint(Colors.white);
+  Paint _black() => _paint(_mix(_color(),Colors.black,0.85));
+  Paint _white() => _paint(_mix(_color(),Colors.white,0.85));
+  Color _mix(Color a, Color b, double f) => Mix.of(a,b,f);
 
   Paint _paint(Color color) => Paint()
     ..color       = color
