@@ -11,7 +11,7 @@ import 'package:analog_clock/sun.dart';
 import 'package:analog_clock/thermometer.dart';
 import 'package:analog_clock/thunderstorm.dart';
 import 'package:analog_clock/time.dart';
-import 'package:analog_clock/weather_inset.dart';
+import 'package:analog_clock/location_inset.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -82,12 +82,7 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-  WeatherInset _weatherInset() =>
-      WeatherInset(_temperature,_temperatureRange,_condition,_location,_timeString(),_now);
-
-  String _timeString() => _model().is24HourFormat
-      ? DateFormat('H:mm:ss').format(_now)
-      : DateFormat('h:mm:ss').format(_now);
+  LocationInset _locationInset() => LocationInset(_location,_now);
 
   static const   hour = Duration(minutes: 12);
   static const minute = Duration(minutes: 1);
@@ -146,7 +141,7 @@ class _AnalogClockState extends State<AnalogClock> {
             _minuteText(theme),
             _hourText(theme),
             _thermometer(theme),
-            _weatherInset()
+            _locationInset()
           ],
         ),
       ),
