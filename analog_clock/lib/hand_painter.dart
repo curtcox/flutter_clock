@@ -17,7 +17,9 @@ class HandPainter extends TimedCustomPainter {
   final Duration duration;
   final HandPart part;
 
-  HandPainter(this.handFunction,this.time,this.duration,this.part) : super(duration);
+  static Duration _fractionOf(Duration d) => Duration(milliseconds: (d.inMilliseconds / 10).floor());
+
+    HandPainter(this.handFunction,this.time,this.duration,this.part) : super(_fractionOf(duration));
 
   double  _handSize() => handFunction.size(time);
   double _lineWidth() => handFunction.thickness(time);
