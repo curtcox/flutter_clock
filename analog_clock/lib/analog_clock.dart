@@ -18,6 +18,7 @@ import 'package:flutter/semantics.dart';
 import 'package:intl/intl.dart';
 
 import 'foggy.dart';
+import 'lightning.dart';
 
 
 class AnalogClock extends StatefulWidget {
@@ -31,8 +32,6 @@ class AnalogClock extends StatefulWidget {
 
 class _AnalogClockState extends State<AnalogClock> {
   var _now = Time.now();
-  var _temperature = '';
-  var _temperatureRange = '';
   var _condition = '';
   var _location = '';
   Timer _timer;
@@ -65,8 +64,6 @@ class _AnalogClockState extends State<AnalogClock> {
   void _updateModel() {
     setState(() {
       final model = widget.model;
-      _temperature = model.temperatureString;
-      _temperatureRange = '(${model.lowString} - ${model.highString})';
       _condition = model.weatherString;
       _location = model.location;
     });
@@ -82,7 +79,6 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-  LocationInset _locationInset() => LocationInset(_location,_now);
 
   static const   hour = Duration(minutes: 12);
   static const minute = Duration(minutes: 1);
@@ -104,12 +100,15 @@ class _AnalogClockState extends State<AnalogClock> {
   _rainy(ThemeData t)        => Rainy(t,_now,_is('rainy'));
   _snowy(ThemeData t)        => Snowy(t,_now,_is('snowy'));
   _thunderstorm(ThemeData t) => Thunderstorm(t,_now,_is('thunderstorm'));
+  _lightning(ThemeData t)    => Lightning(t,_now,_is('thunderstorm'));
+  _locationInset(ThemeData t) => LocationInset(t,_now,_location);
   _thermometer(ThemeData t) {
     final m = widget.model;
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
   }
   bool _isStorming() => _is('rainy') || _is('thunderstorm');
-  _sun(ThemeData t,BuildContext c) => Sun(t,_now,_isStorming(),_lightTheme(context));
+  _sun(ThemeData t,BuildContext c) =>
+      Sun(t,_now,_isStorming(),_lightTheme(context));
   bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
   bool _is(String condition) => _condition.toLowerCase() == condition;
 
@@ -140,8 +139,9 @@ class _AnalogClockState extends State<AnalogClock> {
             _hourHand(theme),
             _minuteText(theme),
             _hourText(theme),
+            _lightning(theme),
             _thermometer(theme),
-            _locationInset()
+            _locationInset(theme)
           ],
         ),
       ),

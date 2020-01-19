@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
+import 'bounds.dart';
 import 'drawn_hand.dart';
 import 'mix.dart';
 import 'outlined_text.dart';
@@ -80,7 +81,7 @@ class HandPainter extends CustomPainter {
     double x = _position(size,t,length).dx;
     double delta = 1;
 
-    while (x > -122) {
+    while (x > Bounds.left) {
       x = x - 1;
       delta = delta * 1.011;
       t = t.subtract(duration * 0.09);

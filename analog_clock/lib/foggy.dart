@@ -5,8 +5,7 @@ import 'ConditionalPainter.dart';
 
 class Foggy extends ConditionalPainter {
 
-  Foggy(theme,time,enabled) : super(theme,time,enabled);
-  painter() => FoggyPainter(time,Duration(seconds: 100));
+  Foggy(theme,time,enabled) : super(theme,time,enabled,FoggyPainter(time,Duration(seconds: 1)));
 
 }
 

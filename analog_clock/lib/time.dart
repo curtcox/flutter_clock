@@ -1,6 +1,6 @@
 class Time {
 
-    static bool _normal = false;
+    static bool _normal = true;
     static DateTime now() => _normal ? _t() : _fast();
     static DateTime _t() => DateTime.now();
     static DateTime _fast() {

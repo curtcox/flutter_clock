@@ -1,41 +1,25 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
+import 'ConditionalPainter.dart';
 import 'outlined_text.dart';
 
-class LocationInset extends StatelessWidget {
+class LocationInset extends ConditionalPainter {
 
-  final String _location;
-  final DateTime _time;
-
-  LocationInset(this._location,this._time);
-
-  LocationInsetPainter _painter() => LocationInsetPainter(_location,_time);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox.expand(
-        child: CustomPaint(
-          painter: _painter(),
-        ),
-      ),
-    );
-  }
+  LocationInset(theme,time,location) : super(theme,time,true,
+      LocationInsetPainter(location, Duration(seconds: 3)));
 
 }
 
-class LocationInsetPainter extends CustomPainter {
+class LocationInsetPainter extends TimedCustomPainter  {
   final String _location;
-  final DateTime _time;
 
   Canvas _canvas;
   Size _size;
 
-  LocationInsetPainter(this._location,this._time);
+  LocationInsetPainter(this._location,rate) : super(rate);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void custom(Canvas canvas, Size size) {
     _size = size;
     _canvas = canvas;
     _paintText(_location, 1);
@@ -45,8 +29,5 @@ class LocationInsetPainter extends CustomPainter {
     Offset position = Offset(0,y * 22);
     OutlinedText.paintText(_canvas, _size, position, text, 18);
   }
-
-  @override
-  bool shouldRepaint(LocationInsetPainter old) => true;
 
 }

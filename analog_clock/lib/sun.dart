@@ -1,16 +1,14 @@
 import 'dart:math' as math;import 'package:analog_clock/ConditionalPainter.dart';
 import 'package:flutter/material.dart';
 
+import 'bounds.dart';
 import 'mix.dart';
 
 /// Sun and sky that is drawn with [CustomPainter]
 class Sun extends ConditionalPainter {
 
-  final bool _storm;
-  final bool _light;
-
-  Sun(theme,time,this._storm,this._light) : super(theme,time,true);
-  painter() => SunPainter(time,_storm,_light,Duration(seconds: 30));
+  Sun(theme,time,storm,light) : super(theme,time,true,
+      SunPainter(time,storm,light,Duration(seconds: 30)));
 
 }
 
@@ -19,7 +17,6 @@ class SunPainter extends TimedCustomPainter {
   DateTime _time;
   bool _storm;
   bool _lightTheme;
-  static const Color _clear = Color.fromARGB(0, 0, 0, 0);
 
   SunPainter(this._time,this._storm,this._lightTheme,rate) : super(rate);
 
@@ -29,8 +26,7 @@ class SunPainter extends TimedCustomPainter {
     _paintSun(canvas, _rect(size), _alignment(size));
   }
 
-  final x = 122.0;
-  Rect _rect(Size size) => Rect.fromLTRB(-x, -x, size.width + x, size.height + x);
+  Rect _rect(Size size) => Bounds.rect(size);
 
   void _paintSun(Canvas canvas, Rect rect, Alignment alignment) {
     final gradient = RadialGradient(
@@ -56,6 +52,7 @@ class SunPainter extends TimedCustomPainter {
     canvas.drawRect(rect, paint);
   }
 
+  static const Color _clear        = Color(0x00000000);
   static const Color _white        = Color(0xFFFFFFFF);
   static const Color _yellow       = Color(0xFFFFF9C4);
   static const Color _sunRed       = Color(0xFFFFAAAA);

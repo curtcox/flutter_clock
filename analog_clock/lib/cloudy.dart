@@ -4,10 +4,7 @@ import 'ConditionalPainter.dart';
 
 class Cloudy extends ConditionalPainter {
 
-  final int _darkness;
-
-  Cloudy(theme,time,this._darkness,enabled) : super(theme,time,enabled);
-  painter() => CloudyPainter(time,_darkness,Duration(seconds: 1));
+  Cloudy(theme,time,darkness,enabled) : super(theme,time,enabled,CloudyPainter(time,darkness,Duration(seconds: 1)));
 
 }
 

@@ -119,6 +119,6 @@ class ThermometerPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(ThermometerPainter old) => true;
+  bool shouldRepaint(ThermometerPainter old) => current != old.current;
 
 }
