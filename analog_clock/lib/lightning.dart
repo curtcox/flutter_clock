@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-import 'package:analog_clock/ConditionalPainter.dart';
+import 'package:analog_clock/conditional_painter.dart';
 
 import 'bounds.dart';
 
 class Lightning extends ConditionalPainter {
 
-  Lightning(theme,time,enabled) : super(theme,time,enabled,
+  Lightning(time,enabled) : super(time,enabled,
       LightningPainter(Duration(milliseconds: 100)));
 }
 

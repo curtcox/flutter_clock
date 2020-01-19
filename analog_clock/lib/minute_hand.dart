@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:analog_clock/hand_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 
+import 'hand.dart';
 import 'hand_function.dart';
+import 'hand_part.dart';
 
 class MinuteHand extends HandFunction {
 
@@ -25,4 +28,6 @@ class MinuteHand extends HandFunction {
   @override int       number(DateTime t) => t.minute;
   @override double thickness(DateTime t) => 16;
 
+  static Hand hand(ThemeData theme,DateTime time,Duration duration, HandPart part) =>
+      Hand(time,HandPainter(MinuteHand(theme),time,duration,part));
 }

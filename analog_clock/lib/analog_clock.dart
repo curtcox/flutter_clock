@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:analog_clock/cloudy.dart';
-import 'package:analog_clock/drawn_hand.dart';
+import 'package:analog_clock/hand_part.dart';
 import 'package:analog_clock/hour_hand.dart';
 import 'package:analog_clock/rainy.dart';
 import 'package:analog_clock/second_hand.dart';
@@ -73,44 +73,55 @@ class _AnalogClockState extends State<AnalogClock> {
     setState(() {
       _now = Time.now();
       _timer = Timer(
-        Duration(milliseconds: 100) - Duration(milliseconds: _now.millisecond),
+        Duration(milliseconds: 100 * 10) - Duration(milliseconds: _now.millisecond),
         _updateTime,
       );
     });
   }
 
 
-  static const   hour = Duration(minutes: 12);
-  static const minute = Duration(minutes: 1);
-  static const second = Duration(seconds: 1);
-  static const   hand = HandPart.hand;
-  static const   text = HandPart.text;
   ClockModel _model() => widget.model;
-  _tail() => _is('windy') ? HandPart.windyTail : HandPart.tail;
-  _hourHand(ThemeData t)   => DrawnHand(HourHand(t,_model()), _now, hour, hand);
-  _minuteHand(ThemeData t) => DrawnHand(MinuteHand(t),_now, minute, hand);
-  _secondHand(ThemeData t) => DrawnHand(SecondHand(t),_now, second, hand);
-  _hourTail(ThemeData t)   => DrawnHand(HourHand(t,_model()), _now, hour, _tail());
-  _minuteTail(ThemeData t) => DrawnHand(MinuteHand(t),_now, minute, _tail());
-  _secondTail(ThemeData t) => DrawnHand(SecondHand(t),_now, second, _tail());
-  _hourText(ThemeData t)   => DrawnHand(HourHand(t,_model()), _now, hour, text);
-  _minuteText(ThemeData t) => DrawnHand(MinuteHand(t),_now, minute, text);
-  _cloudy(ThemeData t)       => Cloudy(t,_now,0,_is('cloudy'));
-  _foggy(ThemeData t)        => Foggy(t,_now,_is('foggy'));
-  _rainy(ThemeData t)        => Rainy(t,_now,_is('rainy'));
-  _snowy(ThemeData t)        => Snowy(t,_now,_is('snowy'));
-  _thunderstorm(ThemeData t) => Thunderstorm(t,_now,_is('thunderstorm'));
-  _lightning(ThemeData t)    => Lightning(t,_now,_is('thunderstorm'));
-  _locationInset(ThemeData t) => LocationInset(t,_now,_location);
+  _lightning(ThemeData t)    => Lightning(_now,_is('thunderstorm'));
+  _locationInset(ThemeData t) => LocationInset(_now,_location);
   _thermometer(ThemeData t) {
     final m = widget.model;
     return Thermometer(t,m.unit,m.temperature,m.low,m.high);
   }
   bool _isStorming() => _is('rainy') || _is('thunderstorm');
-  _sun(ThemeData t,BuildContext c) =>
-      Sun(t,_now,_isStorming(),_lightTheme(context));
+  _sun(BuildContext c) =>
+      Sun(_now,_isStorming(),_lightTheme(context));
   bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
   bool _is(String condition) => _condition.toLowerCase() == condition;
+
+  static const   hour = Duration(minutes: 12);
+  static const minute = Duration(minutes: 1);
+  static const second = Duration(seconds: 1);
+  static const   hand = HandPart.hand;
+  static const   text = HandPart.text;
+
+  Stack _clock(ThemeData t) => Stack(children: [
+    SecondHand.hand(t,_now, second, hand),
+    MinuteHand.hand(t,_now, minute, hand),
+    HourHand.hand(t,_model(), _now, hour, hand),
+    MinuteHand.hand(t,_now, minute, text),
+    HourHand.hand(t,_model(), _now, hour, text),
+  ]);
+
+  _tail() => _is('windy') ? HandPart.windyTail : HandPart.tail;
+  Stack _tails(ThemeData t) => Stack(children: [
+    SecondHand.hand(t,_now, second, _tail()),
+    MinuteHand.hand(t,_now, minute, _tail()),
+    HourHand.hand(t,_model(), _now, hour, _tail()),
+  ]);
+
+  Widget _weather() {
+    if (_is('cloudy'))       return Cloudy(_now,0,true);
+    if (_is('foggy'))        return Foggy(_now,true);
+    if (_is('thunderstorm')) return Thunderstorm(_now);
+    if (_is('rainy'))        return Rainy(_now,true);
+    if (_is('snowy'))        return Snowy(_now,true);
+    return SizedBox.shrink();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,20 +136,10 @@ class _AnalogClockState extends State<AnalogClock> {
       child: Container(
         child: Stack(
           children: [
-            _sun(theme,context),
-            _cloudy(theme),
-            _foggy(theme),
-            _thunderstorm(theme),
-            _rainy(theme),
-            _snowy(theme),
-            _secondTail(theme),
-            _minuteTail(theme),
-            _hourTail(theme),
-            _secondHand(theme),
-            _minuteHand(theme),
-            _hourHand(theme),
-            _minuteText(theme),
-            _hourText(theme),
+            _sun(context),
+            _weather(),
+            _tails(theme),
+            _clock(theme),
             _lightning(theme),
             _thermometer(theme),
             _locationInset(theme)

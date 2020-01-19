@@ -3,7 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 
+import 'hand.dart';
 import 'hand_function.dart';
+import 'hand_painter.dart';
+import 'hand_part.dart';
 
 class SecondHand extends HandFunction {
 
@@ -24,5 +27,8 @@ class SecondHand extends HandFunction {
   @override double      size(DateTime t) => 1;
   @override int       number(DateTime t) => t.second;
   @override double thickness(DateTime t) => 5;
+
+  static Hand hand(ThemeData theme,DateTime time,Duration duration, HandPart part) =>
+      Hand(time,HandPainter(SecondHand(theme),time,duration,part));
 
 }

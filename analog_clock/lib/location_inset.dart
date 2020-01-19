@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'ConditionalPainter.dart';
+import 'conditional_painter.dart';
 import 'outlined_text.dart';
 
 class LocationInset extends ConditionalPainter {
 
-  LocationInset(theme,time,location) : super(theme,time,true,
+  LocationInset(time,location) : super(time,true,
       LocationInsetPainter(location, Duration(seconds: 3)));
 
 }

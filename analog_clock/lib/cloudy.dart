@@ -1,10 +1,11 @@
 import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
-import 'ConditionalPainter.dart';
+import 'conditional_painter.dart';
 
 class Cloudy extends ConditionalPainter {
 
-  Cloudy(theme,time,darkness,enabled) : super(theme,time,enabled,CloudyPainter(time,darkness,Duration(seconds: 1)));
+  Cloudy(time,darkness,enabled) :
+        super(time,enabled,CloudyPainter(time,darkness,Duration(seconds: 1)));
 
 }
 

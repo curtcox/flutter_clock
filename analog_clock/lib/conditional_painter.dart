@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 abstract class ConditionalPainter extends StatelessWidget {
 
-  final ThemeData theme;
   final DateTime time;
   final bool enabled;
   final TimedCustomPainter painter;
 
-  ConditionalPainter(this.theme,this.time,this.enabled,this.painter);
+  ConditionalPainter(this.time,this.enabled,this.painter);
 
   @override Widget build(BuildContext context) =>
     enabled ? _painted() : _empty();

@@ -1,4 +1,4 @@
-import 'dart:math' as math;import 'package:analog_clock/ConditionalPainter.dart';
+import 'dart:math' as math;import 'package:analog_clock/conditional_painter.dart';
 import 'package:flutter/material.dart';
 
 import 'bounds.dart';
@@ -7,7 +7,7 @@ import 'mix.dart';
 /// Sun and sky that is drawn with [CustomPainter]
 class Sun extends ConditionalPainter {
 
-  Sun(theme,time,storm,light) : super(theme,time,true,
+  Sun(time,storm,light) : super(time,true,
       SunPainter(time,storm,light,Duration(seconds: 30)));
 
 }

@@ -1,7 +1,7 @@
 import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
 
-import 'ConditionalPainter.dart';
+import 'conditional_painter.dart';
 
 class DropPainter extends TimedCustomPainter {
 

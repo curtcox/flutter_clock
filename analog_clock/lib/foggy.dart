@@ -1,12 +1,10 @@
 import 'package:analog_clock/time_cycle.dart';
 import 'package:flutter/material.dart';
 
-import 'ConditionalPainter.dart';
+import 'conditional_painter.dart';
 
 class Foggy extends ConditionalPainter {
-
-  Foggy(theme,time,enabled) : super(theme,time,enabled,FoggyPainter(time,Duration(seconds: 1)));
-
+  Foggy(time,enabled) : super(time,enabled,FoggyPainter(time));
 }
 
 class FoggyPainter extends TimedCustomPainter {
@@ -15,7 +13,7 @@ class FoggyPainter extends TimedCustomPainter {
   Canvas _canvas;
   Size _size;
 
-  FoggyPainter(this.time,rate) : super(rate);
+  FoggyPainter(this.time) : super(Duration(seconds: 1));
 
   @override
   void custom(Canvas canvas, Size size) {

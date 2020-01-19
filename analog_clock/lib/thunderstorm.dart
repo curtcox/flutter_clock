@@ -4,20 +4,18 @@ import 'cloudy.dart';
 
 class Thunderstorm extends StatelessWidget {
 
-  final ThemeData theme;
   final DateTime time;
-  final bool enabled;
 
-  Thunderstorm(this.theme,this.time,this.enabled);
+  Thunderstorm(this.time);
 
-  @override Widget build(BuildContext context) => enabled ? _sky() : _empty();
+  @override Widget build(BuildContext context) => _sky();
 
   Widget _empty() => Center();
   Widget _sky() => Container(
         child: Stack(
           children: [
-            Cloudy(theme,time,80,true),
-            Rainy(theme,time,true),
+            Cloudy(time,80,true),
+            Rainy(time,true),
           ],
         ),
       );

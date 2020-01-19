@@ -3,21 +3,21 @@ import 'dart:math' as math;
 import 'package:analog_clock/hand_function.dart';
 import 'package:flutter/material.dart';
 
+import 'conditional_painter.dart';
 import 'bounds.dart';
-import 'drawn_hand.dart';
+import 'hand_part.dart';
 import 'mix.dart';
 import 'outlined_text.dart';
 
 /// [CustomPainter] that draws part of a clock hand.
-class HandPainter extends CustomPainter {
+class HandPainter extends TimedCustomPainter {
 
   final HandFunction handFunction;
   final DateTime time;
   final Duration duration;
   final HandPart part;
 
-  HandPainter(this.handFunction,this.time,this.duration,this.part)
-      : assert(handFunction != null), assert(time != null), assert(duration != null) ;
+  HandPainter(this.handFunction,this.time,this.duration,this.part) : super(duration);
 
   double  _handSize() => handFunction.size(time);
   double _lineWidth() => handFunction.thickness(time);
@@ -27,7 +27,7 @@ class HandPainter extends CustomPainter {
   double _angleRadians(DateTime t) => handFunction.angleRadians(t);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void custom(Canvas canvas, Size size) {
     final length = _length(size);
     final inside = _position(size,time,length);
     final outside = _position(size,time,length * 1.03);
@@ -113,8 +113,5 @@ class HandPainter extends CustomPainter {
   }
 
   double _fontSize() => 20 + 8 * _angleRadians(time);
-
-  @override
-  bool shouldRepaint(HandPainter old) => true;
 
 }

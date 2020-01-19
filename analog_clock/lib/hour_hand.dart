@@ -5,7 +5,10 @@ import 'package:flutter_clock_helper/model.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 import 'package:intl/intl.dart';
 
+import 'hand.dart';
 import 'hand_function.dart';
+import 'hand_painter.dart';
+import 'hand_part.dart';
 
 class HourHand extends HandFunction {
 
@@ -28,5 +31,8 @@ class HourHand extends HandFunction {
   @override double thickness(DateTime now) => 16;
 
   _hour(DateTime t) => int.parse(DateFormat(model.is24HourFormat ? 'HH' : 'hh').format(t));
+
+  static Hand hand(ThemeData theme,ClockModel model,DateTime time,Duration duration, HandPart part) =>
+      Hand(time,HandPainter(HourHand(theme,model),time,duration,part));
 
 }
