@@ -26,7 +26,7 @@ class LocationInsetPainter extends TimedCustomPainter  {
   }
 
   void _paintText(String text, double y) {
-    Offset position = Offset(0,y * 22);
+    Offset position = Offset(_size.width / 2,_size.height - y * 22);
     OutlinedText.paintText(_canvas, _size, position, text, 18);
   }
 
