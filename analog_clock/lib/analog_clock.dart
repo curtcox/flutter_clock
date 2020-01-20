@@ -73,7 +73,7 @@ class _AnalogClockState extends State<AnalogClock> {
     setState(() {
       _now = Time.now();
       _timer = Timer(
-        Duration(milliseconds: 100 * 10) - Duration(milliseconds: _now.millisecond),
+        Duration(milliseconds: 100) - Duration(milliseconds: _now.millisecond),
         _updateTime,
       );
     });
@@ -137,8 +137,8 @@ class _AnalogClockState extends State<AnalogClock> {
         child: Stack(
           children: [
             _sun(context),
-            _weather(),
             _tails(theme),
+            _weather(),
             _clock(theme),
             _lightning(theme),
             _thermometer(theme),
