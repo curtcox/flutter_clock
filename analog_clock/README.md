@@ -1,10 +1,8 @@
 # Analog Clock
 
-This app is an example of an analog clock.
-It has a light theme and a dark theme, and displays sample weather and location data.
+This clock shows you the time and weather in either light or dark themes.
+Time is shown by the clock hands, the numbers on the hands, and the position of the sun.
+The clock hands leave trails -- which flutter when it is windy.
+They are otherwise obscured by the clouds, fog, rain, snow, or a thunderstorm.
 
-<img src='analog.gif' width='350'>
-
-<img src='analog_dark.png' width='350'>
-
-<img src='analog_light.png' width='350'>
+<img src='clock.png' width='350'>
