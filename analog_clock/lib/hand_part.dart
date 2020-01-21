@@ -1,6 +1,1 @@
-enum HandPart {
-  tail,
-  windyTail,
-  hand,
-  text
-}
+enum HandPart { tail, windyTail, hand, text }

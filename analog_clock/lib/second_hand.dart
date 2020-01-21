@@ -9,7 +9,6 @@ import 'hand_painter.dart';
 import 'hand_part.dart';
 
 class SecondHand extends HandFunction {
-
   final ThemeData theme;
 
   /// Total distance traveled by a second or a minute hand, each second or minute,
@@ -18,17 +17,22 @@ class SecondHand extends HandFunction {
 
   SecondHand(this.theme);
 
-  @override double angleRadians(DateTime t) => (t.second + t.millisecond / 1000) * radiansPerTick;
+  @override
+  double angleRadians(DateTime t) =>
+      (t.second + t.millisecond / 1000) * radiansPerTick;
 
-  @override Color color(DateTime t) => theme.brightness == Brightness.light
-      ? Colors.red
-      : Colors.redAccent;
+  @override
+  Color color(DateTime t) =>
+      theme.brightness == Brightness.light ? Colors.red : Colors.redAccent;
 
-  @override double      size(DateTime t) => 1;
-  @override int       number(DateTime t) => t.second;
-  @override double thickness(DateTime t) => 5;
+  @override
+  double size(DateTime t) => 1;
+  @override
+  int number(DateTime t) => t.second;
+  @override
+  double thickness(DateTime t) => 5;
 
-  static Hand hand(ThemeData theme,DateTime time,Duration duration, HandPart part) =>
-      Hand(time,HandPainter(SecondHand(theme),time,duration,part));
-
+  static Hand hand(
+          ThemeData theme, DateTime time, Duration duration, HandPart part) =>
+      Hand(time, HandPainter(SecondHand(theme), time, duration, part));
 }

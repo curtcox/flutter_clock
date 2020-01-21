@@ -20,7 +20,6 @@ import 'package:intl/intl.dart';
 import 'foggy.dart';
 import 'lightning.dart';
 
-
 class AnalogClock extends StatefulWidget {
   const AnalogClock(this.model);
 
@@ -79,47 +78,46 @@ class _AnalogClockState extends State<AnalogClock> {
     });
   }
 
-
   ClockModel _model() => widget.model;
-  _lightning(ThemeData t)    => Lightning(_now,_is('thunderstorm'));
-  _locationInset(ThemeData t) => LocationInset(_now,_location);
+  _lightning(ThemeData t) => Lightning(_now, _is('thunderstorm'));
+  _locationInset(ThemeData t) => LocationInset(_now, _location);
   _thermometer(ThemeData t) {
     final m = widget.model;
-    return Thermometer(t,m.unit,m.temperature,m.low,m.high);
+    return Thermometer(t, m.unit, m.temperature, m.low, m.high);
   }
+
   bool _isStorming() => _is('rainy') || _is('thunderstorm');
-  _sun(BuildContext c) =>
-      Sun(_now,_isStorming(),_lightTheme(context));
+  _sun(BuildContext c) => Sun(_now, _isStorming(), _lightTheme(context));
   bool _lightTheme(context) => Theme.of(context).brightness == Brightness.light;
   bool _is(String condition) => _condition.toLowerCase() == condition;
 
-  static const   hour = Duration(minutes: 12);
+  static const hour = Duration(minutes: 12);
   static const minute = Duration(minutes: 1);
   static const second = Duration(seconds: 1);
-  static const   hand = HandPart.hand;
-  static const   text = HandPart.text;
+  static const hand = HandPart.hand;
+  static const text = HandPart.text;
 
   Stack _clock(ThemeData t) => Stack(children: [
-    SecondHand.hand(t,_now, second, hand),
-    MinuteHand.hand(t,_now, minute, hand),
-    HourHand.hand(t,_model(), _now, hour, hand),
-    MinuteHand.hand(t,_now, minute, text),
-    HourHand.hand(t,_model(), _now, hour, text),
-  ]);
+        SecondHand.hand(t, _now, second, hand),
+        MinuteHand.hand(t, _now, minute, hand),
+        HourHand.hand(t, _model(), _now, hour, hand),
+        MinuteHand.hand(t, _now, minute, text),
+        HourHand.hand(t, _model(), _now, hour, text),
+      ]);
 
   _tail() => _is('windy') ? HandPart.windyTail : HandPart.tail;
   Stack _tails(ThemeData t) => Stack(children: [
-    SecondHand.hand(t,_now, second, _tail()),
-    MinuteHand.hand(t,_now, minute, _tail()),
-    HourHand.hand(t,_model(), _now, hour, _tail()),
-  ]);
+        SecondHand.hand(t, _now, second, _tail()),
+        MinuteHand.hand(t, _now, minute, _tail()),
+        HourHand.hand(t, _model(), _now, hour, _tail()),
+      ]);
 
   Widget _weather() {
-    if (_is('cloudy'))       return Cloudy(_now,0,true);
-    if (_is('foggy'))        return Foggy(_now,true);
+    if (_is('cloudy')) return Cloudy(_now, 0, true);
+    if (_is('foggy')) return Foggy(_now, true);
     if (_is('thunderstorm')) return Thunderstorm(_now);
-    if (_is('rainy'))        return Rainy(_now,true);
-    if (_is('snowy'))        return Snowy(_now,true);
+    if (_is('rainy')) return Rainy(_now, true);
+    if (_is('snowy')) return Snowy(_now, true);
     return SizedBox.shrink();
   }
 
@@ -148,5 +146,4 @@ class _AnalogClockState extends State<AnalogClock> {
       ),
     );
   }
-
 }

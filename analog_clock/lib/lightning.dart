@@ -5,29 +5,22 @@ import 'package:analog_clock/conditional_painter.dart';
 import 'bounds.dart';
 
 class Lightning extends ConditionalPainter {
-
-  Lightning(time,enabled) : super(time,enabled,
-      LightningPainter(Duration(milliseconds: 100)));
+  Lightning(time, enabled)
+      : super(time, enabled, LightningPainter(Duration(milliseconds: 100)));
 }
 
 class LightningPainter extends TimedCustomPainter {
-
   LightningPainter(Duration rate) : super(rate);
   static const Color _bolt = Color(0xCCFFFFFF);
 
   @override
   void custom(Canvas canvas, Size size) {
     if (_flash()) {
-      final paint = Paint()
-        ..color = _bolt;
+      final paint = Paint()..color = _bolt;
       canvas.drawRect(Bounds.rect(size), paint);
     }
   }
 
   bool _flash() => _flashSecond(now.second) && now.millisecond < 100;
-  bool _flashSecond(second) =>
-          second == 1  ||
-          second == 37 ||
-          second == 38;
-
+  bool _flashSecond(second) => second == 1 || second == 37 || second == 38;
 }

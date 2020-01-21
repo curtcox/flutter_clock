@@ -7,6 +7,5 @@ class Hand extends ConditionalPainter {
   /// Create a const clock [Hand].
   ///
   /// All of the parameters are required and must not be null.
-  Hand(time,painter) : super(time,true,painter);
-
+  Hand(time, painter) : super(time, true, painter);
 }

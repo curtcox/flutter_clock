@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 abstract class HandFunction {
-
   /// Hand color.
   Color color(DateTime t);
 
@@ -21,5 +20,4 @@ abstract class HandFunction {
 
   /// value of time for the hand
   int number(DateTime t);
-
 }

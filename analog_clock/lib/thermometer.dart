@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clock_helper/model.dart';
 
 class Thermometer extends StatelessWidget {
-
   final ThemeData theme;
   final num current;
   final num low;
   final num high;
   final TemperatureUnit unit;
 
-  Thermometer(this.theme,this.unit,this.current,this.low,this.high);
+  Thermometer(this.theme, this.unit, this.current, this.low, this.high);
 
-  ThermometerPainter _painter() => ThermometerPainter(unit,current,low,high);
+  ThermometerPainter _painter() => ThermometerPainter(unit, current, low, high);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +23,9 @@ class Thermometer extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class ThermometerPainter extends CustomPainter {
-
   num current;
   num low;
   num high;
@@ -39,31 +36,37 @@ class ThermometerPainter extends CustomPainter {
   Canvas _canvas;
   Size _size;
 
-  ThermometerPainter(this.unit,this.current,this.low,this.high);
+  ThermometerPainter(this.unit, this.current, this.low, this.high);
 
   @override
   void paint(Canvas canvas, Size size) {
-      _w      = size.width;
-      _h      = size.height;
-      _size   = size;
-      _canvas = canvas;
-      _bulb(7.5,_black());
-      _tube(_edge(),    _black());
-      _tube(_inner(),   _glass());
-      _bulb(7,_red());
-      _tube(_tempBar(),   _red());
-      _tube(_center(), _darker());
-      _bulb(2,_darker());
-      _low();
-      _high();
-      _current();
+    _w = size.width;
+    _h = size.height;
+    _size = size;
+    _canvas = canvas;
+    _bulb(7.5, _black());
+    _tube(_edge(), _black());
+    _tube(_inner(), _glass());
+    _bulb(7, _red());
+    _tube(_tempBar(), _red());
+    _tube(_center(), _darker());
+    _bulb(2, _darker());
+    _low();
+    _high();
+    _current();
   }
 
-  _low()     { _mark(low);}
-  _high()    { _mark(high); }
+  _low() {
+    _mark(low);
+  }
+
+  _high() {
+    _mark(high);
+  }
+
   _current() {
     _mark(current);
-    _paintMarkText(current,20.0);
+    _paintMarkText(current, 20.0);
   }
 
   num _celsius(num degrees) {
@@ -79,31 +82,37 @@ class ThermometerPainter extends CustomPainter {
 
   double _cy(num temp) => _h - ((_celsius(temp) + 40.0) * (_h / 100.0));
 
-  void _tube(Rect rect, Paint paint) { _canvas.drawRect(rect, paint); }
-  void _bulb(double r,  Paint paint) { _canvas.drawOval(_oval(r), paint); }
-  void _mark(num temp)                  {
-    final c = _cy(temp);
-    _canvas.drawRect(_ltrb(_w - 10,c + 0.5,_w,c - 0.5), _black());
+  void _tube(Rect rect, Paint paint) {
+    _canvas.drawRect(rect, paint);
   }
 
-  Rect    _edge() => _ltrb(_w - 5.5,            0,   _w,     _h);
-  Rect   _inner() => _ltrb(_w - 5.0,            0,   _w,     _h);
-  Rect  _center() => _ltrb(_w - 2.5,            0,   _w - 2, _h);
-  Rect _tempBar() => _ltrb(_w - 3.0, _cy(current),   _w - 1, _h);
-  Rect _oval(double r) => _ltrb(_w - r -2.5, _h - r, _w + r - 2.5, _h + r);
-  Rect _ltrb(double l,double t,double r,double b) => Rect.fromLTRB(l,t,r,b);
+  void _bulb(double r, Paint paint) {
+    _canvas.drawOval(_oval(r), paint);
+  }
 
-  Paint    _red() => _paint(Colors.red);
-  Paint  _black() => _paint(Colors.black);
-  Paint  _glass() => _paint(Color(0xFFeeeeee));
+  void _mark(num temp) {
+    final c = _cy(temp);
+    _canvas.drawRect(_ltrb(_w - 10, c + 0.5, _w, c - 0.5), _black());
+  }
+
+  Rect _edge() => _ltrb(_w - 5.5, 0, _w, _h);
+  Rect _inner() => _ltrb(_w - 5.0, 0, _w, _h);
+  Rect _center() => _ltrb(_w - 2.5, 0, _w - 2, _h);
+  Rect _tempBar() => _ltrb(_w - 3.0, _cy(current), _w - 1, _h);
+  Rect _oval(double r) => _ltrb(_w - r - 2.5, _h - r, _w + r - 2.5, _h + r);
+  Rect _ltrb(double l, double t, double r, double b) =>
+      Rect.fromLTRB(l, t, r, b);
+
+  Paint _red() => _paint(Colors.red);
+  Paint _black() => _paint(Colors.black);
+  Paint _glass() => _paint(Color(0xFFeeeeee));
   Paint _darker() => _paint(Color(0xFF666666));
 
-  Paint _paint(Color c) => Paint()
-    ..color = c;
+  Paint _paint(Color c) => Paint()..color = c;
 
   void _paintMarkText(double temp, double fontSize) {
     String text = _withUnit(temp);
-    Offset position = Offset(_w - 50,_cy(temp));
+    Offset position = Offset(_w - 50, _cy(temp));
     OutlinedText.paintText(_canvas, _size, position, text, fontSize);
   }
 
@@ -120,5 +129,4 @@ class ThermometerPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(ThermometerPainter old) => current != old.current;
-
 }
