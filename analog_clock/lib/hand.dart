@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'conditional_painter.dart';
 
 /// This only draws one hand of the analog clock.

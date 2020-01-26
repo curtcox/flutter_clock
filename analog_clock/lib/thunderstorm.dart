@@ -10,7 +10,6 @@ class Thunderstorm extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _sky();
 
-  Widget _empty() => Center();
   Widget _sky() => Container(
         child: Stack(
           children: [
