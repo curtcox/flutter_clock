@@ -1,4 +1,8 @@
-# Flutter Clock
+# For the clock in this repo
+
+See https://curtcox.github.io/flutter_clock/analog_clock/build/web/#/
+
+# This was done for the 2020 Flutter Clock contest
 
 Welcome to Flutter Clock!
 
